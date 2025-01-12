@@ -1,20 +1,22 @@
-
 import { Controller, Get, Param } from '@nestjs/common';
+import { PexelsService } from './pexels.service';
 
 @Controller('pexels')
 export class PexelsController {
+  constructor(private readonly pexelsService: PexelsService) {}
   @Get()
-  findAll(): string {
-    return 'This action returns all cats';
+  async findAll() {
+    return this.pexelsService.curated();
   }
+
   @Get(':id')
-  findOne(@Param() params: {id:string}): string {
-    console.log(params.id);
-    return `This action returns a #${params.id} cat`;
+  async getPhoto(@Param() params: { id: string }) {
+    return await this.pexelsService.getPhoto(params.id);
   }
-  @Get(':search')
-  search(@Param() params: {search:string}): string {
-    console.log(params.search);
-    return `This action searches #${params.search} cats`;
+
+  @Get(':query')
+  async searchPhotos(@Param() params: { query: string }) {
+    const data = await this.pexelsService.searchPhotos(params.query);
+    return data;
   }
 }
