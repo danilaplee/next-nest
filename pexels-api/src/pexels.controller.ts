@@ -33,7 +33,12 @@ export class PexelsController {
   }
   @EventPattern('job_response')
   getNotifications(@Payload() data: string, @Ctx() context: RedisContext) {
-    const result = JSON.parse(data);
-    this.pexelsService.requests[result.job.id](result.response);
+    // this.logger.log("job_response", data)
+    try {
+      const result = JSON.parse(data);
+      this.pexelsService.requests[result.job.id](result.response);
+    } catch (err) {
+      this.logger.log('job_response', data);
+    }
   }
 }

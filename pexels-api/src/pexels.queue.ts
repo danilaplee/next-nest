@@ -1,15 +1,7 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import {
-  ClientProxy,
-  Ctx,
-  EventPattern,
-  MessagePattern,
-  Payload,
-  RedisContext,
-} from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { Queue } from 'bullmq';
-import { createClient } from 'pexels';
 
 @Injectable()
 export class PexelsQueueService {
@@ -41,7 +33,7 @@ export class PexelsQueueService {
   }
 
   async getPhoto(id: number) {
-    const job = await this.pexelsQueue.add('show', { id });
+    const job = await this.pexelsQueue.add('getPhoto', { id });
     return new Promise((res) => {
       this.requests[job.id] = res;
     });

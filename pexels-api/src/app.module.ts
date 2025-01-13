@@ -1,4 +1,4 @@
-import { Inject, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import {
   CacheInterceptor,
   CacheModule,
@@ -11,16 +11,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { PexelsController } from './pexels.controller';
-import { PexelsService } from './pexels.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import {
-  ClientProxy,
-  ClientsModule,
-  ServerRedis,
-  Transport,
-} from '@nestjs/microservices';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PexelsQueueService } from './pexels.queue';
-import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
