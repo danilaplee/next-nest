@@ -28,5 +28,6 @@ This is a demo of integration with a third party image search provider Pexels
   is the frontend created in react and nextjs with custom implementation of the:
   - paginated virtual grid
   - routing
+  - server-side rendering
   - search
   - nested modals.
