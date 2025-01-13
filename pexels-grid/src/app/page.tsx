@@ -10,8 +10,7 @@ export default async function Home() {
           {homeQuery.photos.map(({ id, src }) => (
             <Link
               key={id}
-              href={`/?photoId=${id}`}
-              as={`/p/${id}`}
+              href={`/p/${id}`}
               shallow
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
