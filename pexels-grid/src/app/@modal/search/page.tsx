@@ -26,7 +26,6 @@ export default function SearchModal() {
         position: "fixed",
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
-      // onClick={goBack}
     >
       <Button
         style={{

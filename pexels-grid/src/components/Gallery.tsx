@@ -1,24 +1,13 @@
 "use client";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
+// import { useRouter, } from "next/compat/router";
 import { Photo } from "pexels";
 import { useEffect, useRef } from "react";
+import GalleryController from "./GalleryController";
 
 export default function Gallery({ photos }: { photos: Photo[] }) {
   const galleryRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const scrollable = document.getElementsByTagName("html")[0];
-    const listener = () => {
-      const height = scrollable?.scrollHeight;
-      const top = scrollable?.scrollTop;
-      if (height - window.innerHeight * 2 < top) {
-        console.info("load more");
-      }
-    };
-    window?.addEventListener("scrollend", listener);
-    return () => {
-      window.removeEventListener("scrollend", listener);
-    };
-  }, [galleryRef.current]);
   return (
     <div
       className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
@@ -29,7 +18,7 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
         <Link
           key={id}
           href={`/p/${id}`}
-          shallow
+          // shallow
           className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
         >
           <img
@@ -45,6 +34,7 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
           />
         </Link>
       ))}
+      <GalleryController galleryRef={galleryRef} />
     </div>
   );
 }
