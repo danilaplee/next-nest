@@ -31,3 +31,7 @@ This is a demo of integration with a third party image search provider Pexels
   - server-side rendering
   - search
   - nested modals.
+
+![cat](docs/search.png)
+
+![cat](docs/cat.png)
