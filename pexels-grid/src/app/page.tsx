@@ -1,4 +1,5 @@
 import Gallery from "@/components/Gallery";
+import GalleryWrapper from "@/components/GalleryWrapper";
 import { Photos } from "pexels";
 
 export default async function Home() {
@@ -9,7 +10,7 @@ export default async function Home() {
   return (
     <div className="grid items-center justify-items-center min-h-screen">
       <main>
-        <Gallery photos={photos} />
+        <GalleryWrapper photos={photos} />
       </main>
     </div>
   );

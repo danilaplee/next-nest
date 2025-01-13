@@ -1,18 +1,21 @@
 "use client";
 import Link from "next/link";
 import { Photo } from "pexels";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import GalleryController from "./GalleryController";
+import { useAppSelector } from "@/store/hooks";
 
 export default function Gallery({ photos }: { photos: Photo[] }) {
   const galleryRef = useRef<HTMLDivElement>(null);
+  const galleryPhotos = useAppSelector((state) => state.gallery.galleryImages);
+  const photoMerge = galleryPhotos.length > 0 ? galleryPhotos : photos;
   return (
     <div
       className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
       style={{ overflow: "scroll" }}
       ref={galleryRef}
     >
-      {photos?.map(({ id, src }) => (
+      {photoMerge?.map(({ id, src }) => (
         <Link
           key={id}
           href={`/p/${id}`}
@@ -32,7 +35,7 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
           />
         </Link>
       ))}
-      <GalleryController galleryRef={galleryRef} />
+      <GalleryController galleryRef={galleryRef} photos={photos} />
     </div>
   );
 }
