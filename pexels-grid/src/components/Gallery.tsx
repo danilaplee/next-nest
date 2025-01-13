@@ -5,7 +5,13 @@ import { useMemo, useRef } from "react";
 import GalleryController from "./GalleryController";
 import { useAppSelector } from "@/store/hooks";
 
-export default function Gallery({ photos }: { photos: Photo[] }) {
+export default function Gallery({
+  photos,
+  isSearch,
+}: {
+  photos: Photo[];
+  isSearch?: true;
+}) {
   const galleryRef = useRef<HTMLDivElement>(null);
   const galleryPhotos = useAppSelector((state) => state.gallery.galleryImages);
   const photoMerge = galleryPhotos?.length > 0 ? galleryPhotos : photos;

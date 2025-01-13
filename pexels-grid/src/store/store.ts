@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import gallery from './slices/gallery';
+import search from './slices/search';
 export const store = configureStore({
   reducer: {
-    gallery
+    gallery,
+    search
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

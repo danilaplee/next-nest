@@ -1,4 +1,5 @@
-import PhotoWrapper from "@/components/PhotoWrapper";
+import PhotoImage from "@/components/PhotoImage";
+import StorageWrapper from "@/components/StorageWrapper";
 
 export default async function PhotoPage({
   params,
@@ -6,5 +7,9 @@ export default async function PhotoPage({
   params: Promise<{ id: string }>;
 }) {
   const p = await params;
-  return <PhotoWrapper photoId={p.id} />;
+  return (
+    <StorageWrapper>
+      <PhotoImage photoId={p.id} />
+    </StorageWrapper>
+  );
 }
