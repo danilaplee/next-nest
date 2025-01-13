@@ -18,7 +18,7 @@ This is a demo of integration with a third party image search provider Pexels
 - ```pexels-api```
 
   This is the repo for the background integration with Pexels a free image stock, using a queue to process images without breaking the concurrency limits of the api. Features:
-  - Redis Bull Queus
+  - Redis Bull Queues
   - Redis Caching
   - Scheduling with Cron Jobs
   - Microservices with Redis Pub/Sub
