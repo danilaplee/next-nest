@@ -1,14 +1,10 @@
-import PhotoImage from "@/components/PhotoImage";
-import { Photo } from "pexels";
+import PhotoWrapper from "@/components/PhotoWrapper";
 
 export default async function PhotoPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
 }) {
   const p = await params;
-  const photo = (await (
-    await fetch("http://localhost:3000/pexels/" + p.id)
-  ).json()) as Photo;
-  return <PhotoImage photo={photo} />;
+  return <PhotoWrapper photoId={p.id} />;
 }

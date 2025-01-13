@@ -42,9 +42,7 @@ export default function GalleryController({
       }
     },
     enabled: typeof page === "number" && !isNaN(page),
-    retryDelay(failureCount, error) {
-      return 1000;
-    },
+    retryDelay: 1000,
   });
   useEffect(() => {
     const scrollable = document.getElementsByTagName("html")[0];

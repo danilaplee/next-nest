@@ -15,12 +15,12 @@ export class PexelsController {
   constructor(private readonly pexelsService: PexelsQueueService) {}
   @Get()
   async findAll() {
-    return this.pexelsService.curated();
+    return await this.pexelsService.curated();
   }
 
   @Get('/curated/:page')
   async getCuratedByPage(@Param() params: { page: number }) {
-    return this.pexelsService.curated(undefined, params.page);
+    return await this.pexelsService.curated(undefined, params.page);
   }
 
   @Get(':id')
@@ -33,14 +33,22 @@ export class PexelsController {
     const data = await this.pexelsService.searchPhotos(params.query);
     return data;
   }
+
   @EventPattern('job_response')
   getNotifications(@Payload() data: string, @Ctx() context: RedisContext) {
     // this.logger.log("job_response", data)
     try {
       const result = JSON.parse(data);
-      this.pexelsService.requests[result.job.id](result.response);
+      if (result.response.error) {
+        this.pexelsService.requests[result.job.id].reject({ error: true });
+        return;
+      }
+      // console.info('result.job.id', result.job.id)
+      this.pexelsService.requests[result.job.id].resolve(result.response);
+      return;
     } catch (err) {
-      this.logger.log('job_response', data);
+      this.logger.error('job_response_error', err);
+      // this.logger.log('job_response', data);
     }
   }
 }

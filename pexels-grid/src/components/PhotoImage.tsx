@@ -2,11 +2,21 @@
 import { useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { Button } from "@headlessui/react";
+import { useQuery } from "@tanstack/react-query";
 // import Link from 'next/link';
 
-export default function PhotoImage({ photo }: { photo: Photo }) {
+export default function PhotoImage({ photoId }: { photoId: number }) {
   const router = useRouter();
   const goBack = () => router.back();
+  const photoQuery = useQuery({
+    queryKey: ["photo", photoId],
+    queryFn: async () => {
+      const f = await fetch("http://localhost:3000/pexels/" + photoId);
+      return f.json();
+    },
+    retryDelay: 1000,
+  });
+  const photo = photoQuery.data;
   return (
     <div
       className="row-start-3 flex gap-6 flex-wrap items-center justify-center"

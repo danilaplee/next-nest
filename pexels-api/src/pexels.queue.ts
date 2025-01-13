@@ -15,8 +15,8 @@ export class PexelsQueueService {
   }
   async curated(perPage: number = 100, page: number = 1) {
     const job = await this.pexelsQueue.add('curated', { perPage, page });
-    return new Promise((res) => {
-      this.requests[job.id] = res;
+    return new Promise((resolve, reject) => {
+      this.requests[job.id] = { resolve, reject };
       this.client.emit('job_response', {});
     });
   }
@@ -27,15 +27,15 @@ export class PexelsQueueService {
       per_page: perPage,
       page,
     });
-    return new Promise((res) => {
-      this.requests[job.id] = res;
+    return new Promise((resolve, reject) => {
+      this.requests[job.id] = { resolve, reject };
     });
   }
 
   async getPhoto(id: number) {
     const job = await this.pexelsQueue.add('getPhoto', { id });
-    return new Promise((res) => {
-      this.requests[job.id] = res;
+    return new Promise((resolve, reject) => {
+      this.requests[job.id] = { resolve, reject };
     });
   }
 }
