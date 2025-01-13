@@ -1,9 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  ClientProxy,
+  Ctx,
+  EventPattern,
+  MessagePattern,
+  Payload,
+  RedisContext,
+} from '@nestjs/microservices';
+import { Cron } from '@nestjs/schedule';
+import { Queue } from 'bullmq';
 import { createClient } from 'pexels';
+const maxRequestsPerSecond = 10;
 @Injectable()
 export class PexelsService {
+  private readonly logger = new Logger(PexelsService.name);
   pexelsClient: ReturnType<typeof createClient>;
-  constructor() {
+  constructor(
+    @InjectQueue('pexels') private pexelsQueue: Queue,
+    @Inject('API_SERVICE') private client: ClientProxy,
+  ) {
     this.pexelsClient = createClient(process.env.PEXELS_API_KEY);
   }
   async curated(perPage: number = 100, page: number = 1) {
@@ -14,5 +30,24 @@ export class PexelsService {
   }
   async getPhoto(id: number) {
     return this.pexelsClient.photos.show({ id });
+  }
+  @Cron('* * * * * *')
+  async handleCron() {
+    const jobs = await this.pexelsQueue.getJobs(
+      undefined,
+      0,
+      maxRequestsPerSecond,
+    );
+    // this.logger.debug('Found jobs', jobs);
+    await this.client.connect();
+    await Promise.all(
+      jobs.map(async (job) => {
+        await this.pexelsQueue.updateJobProgress(job.id, 10);
+        const response = await this[job.name](...Object.values(job.data));
+        // console.info('res for job', JSON.stringify(response).length, job.id)
+        await this.pexelsQueue.remove(job.id);
+        this.client.emit('job_response', JSON.stringify({ response, job }));
+      }),
+    );
   }
 }

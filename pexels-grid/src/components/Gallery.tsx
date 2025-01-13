@@ -1,9 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
-// import { useRouter, } from "next/compat/router";
 import { Photo } from "pexels";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import GalleryController from "./GalleryController";
 
 export default function Gallery({ photos }: { photos: Photo[] }) {
@@ -18,7 +16,7 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
         <Link
           key={id}
           href={`/p/${id}`}
-          // shallow
+          shallow
           className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
         >
           <img

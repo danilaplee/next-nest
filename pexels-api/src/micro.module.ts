@@ -13,32 +13,13 @@ import { AppService } from './app.service';
 import { PexelsController } from './pexels.controller';
 import { PexelsService } from './pexels.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import {
-  ClientProxy,
-  ClientsModule,
-  ServerRedis,
-  Transport,
-} from '@nestjs/microservices';
+import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
 import { PexelsQueueService } from './pexels.queue';
 import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
-    CacheModule.register({
-      useFactory: async () => {
-        const store = await redisStore({
-          socket: {
-            host: 'localhost',
-            port: 6379,
-          },
-        });
-
-        return {
-          store: store as unknown as CacheStore,
-          ttl: 60 * 60000, // 60 minutes (milliseconds)
-        };
-      },
-    }),
+    ScheduleModule.forRoot(),
     ClientsModule.register([
       {
         name: 'API_SERVICE',
@@ -59,14 +40,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       name: 'pexels',
     }),
   ],
-  controllers: [AppController, PexelsController],
-  providers: [
-    AppService,
-    PexelsQueueService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    },
-  ],
+  controllers: [AppController],
+  providers: [PexelsService, AppService],
 })
-export class AppModule {}
+export class MicroModule {}

@@ -1,16 +1,23 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { PexelsService } from './pexels.service';
+import { Controller, Get, Logger, Param } from '@nestjs/common';
+import { PexelsQueueService } from './pexels.queue';
+import {
+  Ctx,
+  EventPattern,
+  Payload,
+  RedisContext,
+} from '@nestjs/microservices';
 
 @Controller('pexels')
 export class PexelsController {
-  constructor(private readonly pexelsService: PexelsService) {}
+  private readonly logger = new Logger(PexelsController.name);
+  constructor(private readonly pexelsService: PexelsQueueService) {}
   @Get()
   async findAll() {
     return this.pexelsService.curated();
   }
 
   @Get('/curated/:page')
-  async getCuratedByPage(@Param() params: {page: number}) {
+  async getCuratedByPage(@Param() params: { page: number }) {
     return this.pexelsService.curated(undefined, params.page);
   }
 
@@ -23,5 +30,10 @@ export class PexelsController {
   async searchPhotos(@Param() params: { query: string }) {
     const data = await this.pexelsService.searchPhotos(params.query);
     return data;
+  }
+  @EventPattern('job_response')
+  getNotifications(@Payload() data: string, @Ctx() context: RedisContext) {
+    const result = JSON.parse(data);
+    this.pexelsService.requests[result.job.id](result.response);
   }
 }
