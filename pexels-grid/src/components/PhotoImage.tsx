@@ -4,6 +4,7 @@ import { Photo } from "pexels";
 import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
+import { API_URL } from "@/config";
 // import Link from 'next/link';
 
 export default function PhotoImage({ photoId }: { photoId: string }) {
@@ -19,7 +20,7 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
         );
         if (galleryImage) return galleryImage;
       } catch (err) {}
-      const f = await fetch("http://localhost:3000/pexels/" + photoId);
+      const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },
     retryDelay: 1000,

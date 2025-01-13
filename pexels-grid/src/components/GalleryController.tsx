@@ -1,4 +1,5 @@
 "use client";
+import { API_URL } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
@@ -28,8 +29,8 @@ export default function GalleryController({
           dispatch(setGallery({ photos }));
         }
         const uri = query
-          ? `http://localhost:3000/pexels/search/${query}?page=${page}`
-          : "http://localhost:3000/pexels/curated/" + page;
+          ? `${API_URL}pexels/search/${query}?page=${page}`
+          : API_URL + "pexels/curated/" + page;
         const f = await fetch(uri);
         const d = await f.json();
         const photoFiltered = d?.photos?.filter(
