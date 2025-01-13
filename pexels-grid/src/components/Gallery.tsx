@@ -6,17 +6,23 @@ import { useEffect, useRef } from "react";
 export default function Gallery({ photos }: { photos: Photo[] }) {
   const galleryRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    console.info("on gallery", galleryRef.current);
-    galleryRef.current?.parentElement?.addEventListener("scroll", () => {
-      console.log(
-        galleryRef?.current?.scrollHeight,
-        galleryRef.current?.scrollTop,
-      );
-    });
+    const scrollable = document.getElementsByTagName("html")[0];
+    const listener = () => {
+      const height = scrollable?.scrollHeight;
+      const top = scrollable?.scrollTop;
+      if (height - window.innerHeight * 2 < top) {
+        console.info("load more");
+      }
+    };
+    window?.addEventListener("scrollend", listener);
+    return () => {
+      window.removeEventListener("scrollend", listener);
+    };
   }, [galleryRef.current]);
   return (
     <div
       className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
+      style={{ overflow: "scroll" }}
       ref={galleryRef}
     >
       {photos?.map(({ id, src }) => (

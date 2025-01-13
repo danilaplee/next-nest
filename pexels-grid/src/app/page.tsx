@@ -15,8 +15,8 @@ export default async function Home({
   ).json()) as Photos;
   const photos = homeQuery?.photos;
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen">
-      <main className="">
+    <div className="grid items-center justify-items-center min-h-screen">
+      <main>
         <Gallery photos={photos} />
       </main>
     </div>
