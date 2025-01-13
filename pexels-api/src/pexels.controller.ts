@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Param } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { PexelsQueueService } from './pexels.queue';
 import {
   Ctx,
@@ -29,8 +29,8 @@ export class PexelsController {
   }
 
   @Get('/search/:query')
-  async searchPhotos(@Param() params: { query: string }) {
-    const data = await this.pexelsService.searchPhotos(params.query);
+  async searchPhotos(@Param() params: { query: string}, @Query() query: {page:number}) {
+    const data = await this.pexelsService.searchPhotos(params.query, 80, query.page);
     return data;
   }
 

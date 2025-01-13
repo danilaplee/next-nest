@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import {
+  _internal_ComponentDialog,
   Button,
   Description,
   Dialog,
@@ -12,17 +13,22 @@ import {
 } from "@headlessui/react";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setQuery } from "@/store/slices/search";
+import { setQuery, setSearchState } from "@/store/slices/search";
+import { useRef } from "react";
 export function SearchModal() {
   const router = useRouter();
   const goBack = () => router.back();
   const dispatch = useAppDispatch();
   const searchQuery = useAppSelector((state) => state.search.query);
-  const doSearch = () => {
-    console.info("doSearch", searchQuery);
-    if (typeof searchQuery === "string")
+  const searchState = useAppSelector((state) => state.search.searchState);
+  const doSearch = async () => {
+    if (typeof searchQuery === "string") {
       router.push("/search/" + encodeURIComponent(searchQuery));
+      dispatch(setSearchState("loaded"));
+    }
   };
+  const dialogRef = useRef<HTMLElement | null>(null);
+  if (searchState === "loaded") return <></>;
   return (
     <div
       className="row-start-3 flex gap-6 flex-wrap items-center justify-center"
@@ -35,20 +41,8 @@ export function SearchModal() {
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
     >
-      <Button
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          cursor: "pointer",
-          zIndex: 1000,
-          // fontSize: 32
-        }}
-        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-      >
-        &lt; Back
-      </Button>
       <Dialog
+        ref={dialogRef}
         open={true}
         as="div"
         className="relative z-10 focus:outline-none"
@@ -80,7 +74,13 @@ export function SearchModal() {
                   )}
                 />
               </Field>
-              <div className="mt-4">
+              <div className="mt-4" style={{ gap: 10, display: "flex" }}>
+                <Button
+                  onClick={goBack}
+                  className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                >
+                  &lt; Back
+                </Button>
                 <Button
                   className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                   onClick={doSearch}

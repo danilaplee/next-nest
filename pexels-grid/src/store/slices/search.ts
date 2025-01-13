@@ -3,10 +3,12 @@ import type {PayloadAction} from '@reduxjs/toolkit';
 
 export interface SearchState {
   query?: string
+  searchState: "init" | "loaded"
 }
 
 const initialState: SearchState = {
-  query:undefined
+  query:undefined,
+  searchState: "init"
 };
 
 export const SearchSlice = createSlice({
@@ -19,11 +21,17 @@ export const SearchSlice = createSlice({
     ) => {
       state.query = action.payload
     },
+    setSearchState: (
+      state,
+      action: PayloadAction<"init" | "loaded">,
+    ) => {
+      state.searchState = action.payload
+    },
     
   },
 });
 
-export const {setQuery} =
+export const {setQuery, setSearchState} =
   SearchSlice.actions;
 
 export default SearchSlice.reducer;

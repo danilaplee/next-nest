@@ -2,18 +2,18 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-// import { useRouter, } from "next/compat/router";
 import { Photo } from "pexels";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 
 export default function GalleryController({
   galleryRef,
   photos,
+  query,
 }: {
   galleryRef: RefObject<HTMLDivElement | null>;
   photos: Photo[];
+  query?: string;
 }) {
   const router = useRouter();
   const params = useSearchParams();
@@ -27,7 +27,10 @@ export default function GalleryController({
         if (galleryPhotos.length === 0) {
           dispatch(setGallery({ photos }));
         }
-        const f = await fetch("http://localhost:3000/pexels/curated/" + page);
+        const uri = query
+          ? `http://localhost:3000/pexels/search/${query}?page=${page}`
+          : "http://localhost:3000/pexels/curated/" + page;
+        const f = await fetch(uri);
         const d = await f.json();
         const photoFiltered = d?.photos?.filter(
           (p: Photo) => galleryPhotos.find((i) => i.id === p.id) === undefined,

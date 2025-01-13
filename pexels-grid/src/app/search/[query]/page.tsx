@@ -1,6 +1,5 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-import GalleryWrapper from "@/components/StorageWrapper";
 import { Photos } from "pexels";
 
 export default async function SearchResults({
@@ -17,7 +16,7 @@ export default async function SearchResults({
     <div className="grid items-center justify-items-center min-h-screen">
       <main>
         <StorageWrapper>
-          <Gallery photos={photos} isSearch={true} />
+          <Gallery photos={photos} query={p.query} />
         </StorageWrapper>
       </main>
     </div>
