@@ -1,9 +1,8 @@
 import { InjectQueue } from '@nestjs/bullmq';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Cron } from '@nestjs/schedule';
 import { Queue } from 'bullmq';
-import { response } from 'express';
 import { createClient } from 'pexels';
 const maxRequestsPerSecond = 3;
 @Injectable()
