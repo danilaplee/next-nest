@@ -9,12 +9,17 @@ export class PexelsController {
     return this.pexelsService.curated();
   }
 
+  @Get('/curated/:page')
+  async getCuratedByPage(@Param() params: {page: number}) {
+    return this.pexelsService.curated(undefined, params.page);
+  }
+
   @Get(':id')
-  async getPhoto(@Param() params: { id: string }) {
+  async getPhoto(@Param() params: { id: number }) {
     return await this.pexelsService.getPhoto(params.id);
   }
 
-  @Get(':query')
+  @Get('/search/:query')
   async searchPhotos(@Param() params: { query: string }) {
     const data = await this.pexelsService.searchPhotos(params.query);
     return data;
