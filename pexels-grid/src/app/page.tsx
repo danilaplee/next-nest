@@ -7,7 +7,7 @@ export default async function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="mx-auto max-w-[1960px] p-4">
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-          {homeQuery.photos.map(({ id, src }) => (
+          {homeQuery?.photos?.map(({ id, src }) => (
             <Link
               key={id}
               href={`/p/${id}`}
