@@ -8,7 +8,7 @@ import { useAppSelector } from "@/store/hooks";
 export default function Gallery({ photos }: { photos: Photo[] }) {
   const galleryRef = useRef<HTMLDivElement>(null);
   const galleryPhotos = useAppSelector((state) => state.gallery.galleryImages);
-  const photoMerge = galleryPhotos.length > 0 ? galleryPhotos : photos;
+  const photoMerge = galleryPhotos?.length > 0 ? galleryPhotos : photos;
   return (
     <div
       className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"

@@ -60,13 +60,19 @@ export default function GalleryController({
           typeof page === "number" && !isNaN(page) ? page + 1 : "2";
         console.info("next page", nextPage);
         router.push("?page=" + nextPage, { scroll: false });
-        galleryQuery.refetch();
+        // galleryQuery.refetch();
       }
     };
     window?.addEventListener("scroll", listener);
     return () => {
       window.removeEventListener("scroll", listener);
     };
-  }, [galleryRef.current, page, galleryQuery, router]);
+  }, [
+    galleryRef.current,
+    page,
+    galleryQuery.isLoading,
+    galleryQuery.isError,
+    router,
+  ]);
   return <></>;
 }

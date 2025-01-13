@@ -6,8 +6,10 @@ import {
   Payload,
   RedisContext,
 } from '@nestjs/microservices';
+import { CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('pexels')
+@CacheTTL(60 * 60000)
 export class PexelsController {
   private readonly logger = new Logger(PexelsController.name);
   constructor(private readonly pexelsService: PexelsQueueService) {}
