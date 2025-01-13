@@ -17,7 +17,6 @@ export class PexelsQueueService {
     const job = await this.pexelsQueue.add('curated', { perPage, page });
     return new Promise((resolve, reject) => {
       this.requests[job.id] = { resolve, reject };
-      this.client.emit('job_response', {});
     });
   }
 
