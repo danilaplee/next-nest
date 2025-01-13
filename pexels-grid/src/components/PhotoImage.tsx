@@ -3,14 +3,22 @@ import { useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
+import { useAppSelector } from "@/store/hooks";
 // import Link from 'next/link';
 
-export default function PhotoImage({ photoId }: { photoId: number }) {
+export default function PhotoImage({ photoId }: { photoId: string }) {
   const router = useRouter();
   const goBack = () => router.back();
+  const galleryImages = useAppSelector((state) => state.gallery.galleryImages);
   const photoQuery = useQuery({
     queryKey: ["photo", photoId],
     queryFn: async () => {
+      try {
+        const galleryImage = galleryImages?.find(
+          (i) => i.id === parseInt(photoId, 10),
+        );
+        if (galleryImage) return galleryImage;
+      } catch (err) {}
       const f = await fetch("http://localhost:3000/pexels/" + photoId);
       return f.json();
     },
