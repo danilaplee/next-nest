@@ -32,6 +32,8 @@ This is a demo of integration with a third party image search provider Pexels
   - search
   - nested modals.
 
-![cat](docs/search.png)
+![search](docs/search.png)
 
 ![cat](docs/cat.png)
+
+![pagination](docs/pagination.png)
