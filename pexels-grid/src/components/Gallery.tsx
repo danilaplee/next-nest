@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Photo } from "pexels";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import GalleryController from "./GalleryController";
 import { useAppSelector } from "@/store/hooks";
 import { Button } from "@headlessui/react";

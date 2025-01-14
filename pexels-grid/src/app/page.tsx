@@ -1,6 +1,5 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-import GalleryWrapper from "@/components/StorageWrapper";
 import { Photos } from "pexels";
 
 export default async function Home() {

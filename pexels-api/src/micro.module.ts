@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 import { PexelsService } from './pexels.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ScheduleModule } from '@nestjs/schedule';
-
+import { config } from './config';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -15,17 +15,11 @@ import { ScheduleModule } from '@nestjs/schedule';
       {
         name: 'API_SERVICE',
         transport: Transport.REDIS,
-        options: {
-          host: 'localhost',
-          port: 6379,
-        },
+        options: config.redis,
       },
     ]),
     BullModule.forRoot({
-      connection: {
-        host: 'localhost',
-        port: 6379,
-      },
+      connection: config.redis,
     }),
     BullModule.registerQueue({
       name: 'pexels',

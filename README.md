@@ -5,8 +5,10 @@ This is a demo of integration with a third party image search provider Pexels
 ## Requirements
 
 - Backend 
-  - ```Redis``` on ```localhost:6379```
+  - ```Redis``` running on ```localhost:6379``` or
+  - ```REDIS_HOST``` and/or ```REDIS_PORT``` environment variables
   - ```PEXELS_API_KEY``` environment variable
+  - ```PORT``` environment variable
 
 - Frontend
   - ```PORT``` environment variable
@@ -22,6 +24,8 @@ This is a demo of integration with a third party image search provider Pexels
   - Redis Caching
   - Scheduling with Cron Jobs
   - Microservices with Redis Pub/Sub
+  - ```pexels-api/src/app.module.ts``` - api + queue producer + sub
+  - ```pexels-api/src/micro.module.ts``` - queue consumer + scheduling + pub
 
 - ```pexels-grid```
 

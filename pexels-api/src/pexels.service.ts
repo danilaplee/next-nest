@@ -4,6 +4,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Cron } from '@nestjs/schedule';
 import { Queue } from 'bullmq';
 import { createClient } from 'pexels';
+import { config } from './config';
 const maxRequestsPerSecond = 3;
 @Injectable()
 export class PexelsService {
@@ -12,7 +13,7 @@ export class PexelsService {
     @InjectQueue('pexels') private pexelsQueue: Queue,
     @Inject('API_SERVICE') private client: ClientProxy,
   ) {
-    this.pexelsClient = createClient(process.env.PEXELS_API_KEY);
+    this.pexelsClient = createClient(config.pexelsKey);
   }
   async curated(perPage: number = 100, page: number = 1) {
     return this.pexelsClient.photos.curated({ per_page: perPage, page });
@@ -38,11 +39,11 @@ export class PexelsService {
           await this.pexelsQueue.updateJobProgress(job.id, 10);
           const response = await this[job.name](...Object.values(job.data));
           if (!response.id && !response.photos) throw 'invalid_response';
-          // console.info('res for job', JSON.stringify(response).length, job.id)
+          console.info('res for job', JSON.stringify(response).length, job.id);
           await this.pexelsQueue.remove(job.id);
           this.client.emit('job_response', JSON.stringify({ response, job }));
         } catch (err) {
-          // console.error('job processing error', err)
+          console.error('job processing error', err);
           await this.pexelsQueue.remove(job.id);
           this.client.emit(
             'job_response',

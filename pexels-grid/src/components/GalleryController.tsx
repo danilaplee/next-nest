@@ -67,12 +67,6 @@ export default function GalleryController({
     return () => {
       window.removeEventListener("scroll", listener);
     };
-  }, [
-    galleryRef.current,
-    page,
-    galleryQuery.isLoading,
-    galleryQuery.isError,
-    router,
-  ]);
+  }, [page, galleryQuery.isLoading, galleryQuery.isError, router]);
   return <></>;
 }

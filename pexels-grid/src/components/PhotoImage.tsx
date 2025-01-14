@@ -1,11 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Photo } from "pexels";
 import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { API_URL } from "@/config";
-// import Link from 'next/link';
 
 export default function PhotoImage({ photoId }: { photoId: string }) {
   const router = useRouter();
@@ -19,7 +17,9 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
           (i) => i.id === parseInt(photoId, 10),
         );
         if (galleryImage) return galleryImage;
-      } catch (err) {}
+      } catch (err) {
+        console.error("err", (err as Error)?.message || err);
+      }
       const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },
@@ -35,6 +35,7 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
         top: 0,
         left: 0,
         position: "fixed",
+        zIndex: 1000000,
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
       onClick={goBack}
