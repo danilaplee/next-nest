@@ -61,7 +61,7 @@ export default function GalleryController({
         router.push("?page=" + nextPage, { scroll: false });
       }
     };
-    window?.addEventListener("scroll", listener);
+    window.addEventListener("scroll", listener);
     return () => {
       window.removeEventListener("scroll", listener);
     };
