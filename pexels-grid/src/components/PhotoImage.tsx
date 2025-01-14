@@ -4,6 +4,7 @@ import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { API_URL } from "@/config";
+import { Photo } from "pexels";
 
 export default function PhotoImage({ photoId }: { photoId: string }) {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
     },
     retryDelay: 1000,
   });
-  const photo = photoQuery.data;
+  const photo = photoQuery.data as Photo;
   return (
     <div
       className="row-start-3 flex gap-6 flex-wrap items-center justify-center"
@@ -54,18 +55,24 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
       >
         &lt; Back
       </Button>
-      <div
-        style={{
-          backgroundImage: `url(${photo?.src?.large2x})`,
-          height: "100%",
-          width: "100%",
-          position: "absolute",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          backgroundSize: "contain",
-        }}
-      />
+      {photo?.id !== undefined ? <>
+        <div
+          style={{
+            backgroundImage: `url(${photo?.src?.large2x})`,
+            height: "100%",
+            width: "100%",
+            position: "absolute",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundSize: "contain",
+          }}
+        />
+        <div style={{position:"fixed", bottom:20, right:20}}>
+          <h1>{photo?.alt || 'Untitled'} by {photo?.photographer}</h1>
+        </div>
+      </>
+      : null }
     </div>
   );
 }
