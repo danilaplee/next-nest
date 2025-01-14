@@ -69,7 +69,16 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
               backgroundSize: "contain",
             }}
           />
-          <div style={{ position: "fixed", bottom: 20, right: 20 }}>
+          <div
+            style={{
+              position: "fixed",
+              bottom: 20,
+              right: 20,
+              padding: 10,
+              borderRadius: 20,
+              backgroundColor: "rgba(0,0,0,0.7)",
+            }}
+          >
             <h1>
               {photo?.alt || "Untitled"} by {photo?.photographer}
             </h1>
