@@ -6,7 +6,7 @@ This is a demo of integration with a third party image search provider Pexels
 
 - Backend 
   - ```Redis``` running on ```localhost:6379``` or
-  - ```REDIS_HOST``` and/or ```REDIS_PORT``` environment variables
+  - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASS``` and ```REDIS_PORT``` environment variables
   - ```PEXELS_API_KEY``` environment variable
   - ```PORT``` environment variable
 
@@ -30,11 +30,11 @@ This is a demo of integration with a third party image search provider Pexels
 - ```pexels-grid```
 
   is the frontend created in react and nextjs with custom implementation of the:
-  - paginated virtual grid
-  - routing
-  - server-side rendering
-  - search
-  - nested modals.
+  - Paginated virtual grid
+  - Server-Side Rendering
+  - Search
+  - SPA Routing
+  - Nested Routing
 
 ![search](docs/search.png)
 
