@@ -13,8 +13,10 @@ export default function Gallery({
   photos: Photo[];
   query?: string;
 }) {
-  const galleryPhotos = useAppSelector((state) => state.gallery.galleryImages);
-  const photoMerge = galleryPhotos?.length > 0 ? galleryPhotos : photos;
+  const galleryPhotos = useAppSelector((state) => state.gallery.visiblePhotos);
+  const offsetTop = useAppSelector(
+    (state) => state.gallery.visibleRange.offsetTop,
+  );
   const router = useRouter();
   return (
     <>
@@ -30,9 +32,9 @@ export default function Gallery({
       ) : null}
       <div
         className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
-        style={{ overflow: "scroll" }}
+        style={{ overflow: "scroll", paddingTop: offsetTop }}
       >
-        {photoMerge?.map(({ id, src }) => (
+        {galleryPhotos?.map(({ id, src }) => (
           <Link
             key={id}
             href={`/p/${id}`}

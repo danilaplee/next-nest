@@ -9,11 +9,17 @@ This is a demo of integration with a third party image search provider Pexels
   - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASS``` and ```REDIS_PORT``` environment variables
   - ```PEXELS_API_KEY``` environment variable
   - ```PORT``` environment variable
+  - Run with
+  ``` yarn ```
+  ``` yarn start ```
 
 - Frontend
   - ```PORT``` environment variable
   - ```API_URL``` environment variable pointing to the backend
   - or ```backend``` running on ```localhost:3000```
+  - Run with
+  ``` yarn ```
+  ``` yarn dev ```
 
 ## Project Structure:
 
@@ -26,6 +32,7 @@ This is a demo of integration with a third party image search provider Pexels
   - Scheduling with Cron Jobs
   - ```pexels-api/src/app.module.ts``` > ```pexels-api/src/pexels.controller.ts``` - api + queue producer + sub
   - ```pexels-api/src/micro.module.ts``` > ```pexels-api/src/pexels.service.ts``` - queue consumer + scheduling + pub
+  
 
 - ```pexels-grid```
 
@@ -36,6 +43,7 @@ This is a demo of integration with a third party image search provider Pexels
   - SPA Routing
   - Nested Routing
 
+## Screenshots:
 ![search](docs/search.png)
 
 ![cat](docs/cat.png)

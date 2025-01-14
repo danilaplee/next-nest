@@ -6,7 +6,13 @@ import { useAppSelector } from "@/store/hooks";
 import { API_URL } from "@/config";
 import { Photo } from "pexels";
 
-export default function PhotoImage({ photoId, photo:photoSSR }: { photoId: string, photo?:Photo }) {
+export default function PhotoImage({
+  photoId,
+  photo: photoSSR,
+}: {
+  photoId: string;
+  photo?: Photo;
+}) {
   const router = useRouter();
   const goBack = () => router.back();
   const galleryImages = useAppSelector((state) => state.gallery.galleryImages);
@@ -14,8 +20,7 @@ export default function PhotoImage({ photoId, photo:photoSSR }: { photoId: strin
     queryKey: ["photo", photoId],
     queryFn: async () => {
       try {
-        if(photoSSR?.id)
-          return photoSSR.id
+        if (photoSSR?.id) return photoSSR.id;
         const galleryImage = galleryImages?.find(
           (i) => i.id === parseInt(photoId, 10),
         );
