@@ -7,7 +7,7 @@ export interface SearchState {
 }
 
 const initialState: SearchState = {
-  query:undefined,
+  query:'',
   searchState: "init"
 };
 
