@@ -24,8 +24,8 @@ This is a demo of integration with a third party image search provider Pexels
   - Redis Bull Queues
   - Redis Caching
   - Scheduling with Cron Jobs
-  - ```pexels-api/src/app.module.ts``` - api + queue producer + sub
-  - ```pexels-api/src/micro.module.ts``` - queue consumer + scheduling + pub
+  - ```pexels-api/src/app.module.ts``` > ```pexels-api/src/pexels.controller.ts``` - api + queue producer + sub
+  - ```pexels-api/src/micro.module.ts``` > ```pexels-api/src/pexels.service.ts``` - queue consumer + scheduling + pub
 
 - ```pexels-grid```
 
