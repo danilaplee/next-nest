@@ -20,14 +20,14 @@ export default function GalleryController({
   const galleryPhotos = useAppSelector((state) => state.gallery.galleryImages);
   const dispatch = useAppDispatch();
   const galleryQuery = useQuery({
-    queryKey: ["gallery", page],
+    queryKey: ["gallery", page, query],
     queryFn: async () => {
       try {
         if (galleryPhotos.length === 0) {
           dispatch(setGallery({ photos }));
         }
         const uri = query
-          ? `${API_URL}pexels/search/${query}?page=${page}`
+          ? `${API_URL}pexels/search/${query}?page=${page || 1}`
           : API_URL + "pexels/curated/" + page;
         const f = await fetch(uri);
         const d = await f.json();
@@ -43,7 +43,7 @@ export default function GalleryController({
         console.error("pagination error", err);
       }
     },
-    enabled: typeof page === "number" && !isNaN(page),
+    enabled: (typeof page === "number" && !isNaN(page)) || query !== undefined,
     retryDelay: 1000,
   });
   useEffect(() => {
