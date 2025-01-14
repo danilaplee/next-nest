@@ -4,10 +4,17 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Photo, Photos } from "pexels";
-import { useCallback, useEffect, useState } from "react";
+import { Photo } from "pexels";
+import { useEffect } from "react";
+const getColumnWidth = () => {
+  let columnWidth =
+    window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
+  if (window.innerWidth < 1280) columnWidth = window.innerWidth / 2;
 
-const buffer = 2000; // Add buffer for smoother lazy loading
+  if (window.innerWidth < 640) columnWidth = window.innerWidth;
+  return columnWidth;
+};
+const buffer = 5000; // Add buffer for smoother lazy loading
 export default function GalleryController({
   photos,
   query,
@@ -26,7 +33,7 @@ export default function GalleryController({
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (initialDispatch) return;
-    console.info("set initial gallery", photos);
+    // console.info("set initial gallery", photos);
 
     dispatch(setGallery({ photos, initial: true }));
   }, [photos, initialDispatch]);
@@ -45,7 +52,7 @@ export default function GalleryController({
               galleryPhotos.find((i) => i.id === p.id) === undefined,
           ) || [];
         const nphotos = [...galleryPhotos, ...photoFiltered];
-        console.info("update gallery", nphotos);
+        // console.info("update gallery", nphotos);
         dispatch(setGallery({ photos: nphotos }));
         calculateVisibleRange(true, nphotos);
         return nphotos;
@@ -57,22 +64,18 @@ export default function GalleryController({
     retryDelay: 1000,
   });
 
-  let columnWidth =
-    window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
-  if (window.innerWidth < 1280) columnWidth = window.innerWidth / 2;
-
-  if (window.innerWidth < 640) columnWidth = window.innerWidth;
+  let columnWidth = getColumnWidth();
 
   // Helper: Calculate visible range based on scroll position
-  const calculateVisibleRange = (force?: boolean, nphotos?: Photos[]) => {
+  const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
     const container = document.getElementsByTagName("html")[0];
     const scrollTop = container.scrollTop;
     if (!force && visibleRange.visibleEnd !== 0) {
       const topThreshold = visibleRange.visibleEnd - buffer;
       const bottomThreshold = visibleRange.offsetTop + buffer;
       // console.info({topThreshold, bottomThreshold, scrollTop})
-      if (scrollTop < topThreshold) return;
-      if (scrollTop < topThreshold && scrollTop > bottomThreshold) return;
+      if (scrollTop <= topThreshold) return;
+      if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
     const photoList =
       nphotos || (galleryPhotos.length ? galleryPhotos : photos);
@@ -121,7 +124,6 @@ export default function GalleryController({
       offsetTop,
       visibleEnd,
     };
-    // Convert column indices to photo indices
     dispatch(setVisibleRange(nvisible));
     return nvisible;
   };

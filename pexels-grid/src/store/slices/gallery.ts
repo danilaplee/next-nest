@@ -32,7 +32,7 @@ export const GallerySlice = createSlice({
       state,
       action: PayloadAction<VisibleRange>,
     ) => {
-      console.info('setVisibleRange', action.payload)
+      // console.info('setVisibleRange', action.payload)
       state.visibleRange = action.payload
       state.visiblePhotos = state.galleryImages.slice(state.visibleRange.start, state.visibleRange.end)
     },
