@@ -37,7 +37,7 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
         left: 0,
         position: "fixed",
         zIndex: 1000000,
-        cursor:'zoom-out',
+        cursor: "zoom-out",
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
       onClick={goBack}
@@ -55,24 +55,27 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
       >
         &lt; Back
       </Button>
-      {photo?.id !== undefined ? <>
-        <div
-          style={{
-            backgroundImage: `url(${photo?.src?.large2x})`,
-            height: "100%",
-            width: "100%",
-            position: "absolute",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundAttachment: "fixed",
-            backgroundSize: "contain",
-          }}
-        />
-        <div style={{position:"fixed", bottom:20, right:20}}>
-          <h1>{photo?.alt || 'Untitled'} by {photo?.photographer}</h1>
-        </div>
-      </>
-      : null }
+      {photo?.id !== undefined ? (
+        <>
+          <div
+            style={{
+              backgroundImage: `url(${photo?.src?.large2x})`,
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
+              backgroundSize: "contain",
+            }}
+          />
+          <div style={{ position: "fixed", bottom: 20, right: 20 }}>
+            <h1>
+              {photo?.alt || "Untitled"} by {photo?.photographer}
+            </h1>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }
