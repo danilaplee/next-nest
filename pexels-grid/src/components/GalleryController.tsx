@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { useEffect } from "react";
+const visibleBuffer = window.innerWidth > 700 ? 10000 : 3000;
 const getColumnWidth = () => {
   let columnWidth =
     window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
@@ -14,7 +15,6 @@ const getColumnWidth = () => {
   if (window.innerWidth < 640) columnWidth = window.innerWidth;
   return columnWidth;
 };
-const buffer = 7000; // Add buffer for smoother lazy loading
 export default function GalleryController({
   photos,
   query,
@@ -52,7 +52,7 @@ export default function GalleryController({
               galleryPhotos.find((i) => i.id === p.id) === undefined,
           ) || [];
         const nphotos = [...galleryPhotos, ...photoFiltered];
-        // console.info("update gallery", nphotos);
+        console.info("update gallery", nphotos);
         dispatch(setGallery({ photos: nphotos }));
         calculateVisibleRange(true, nphotos);
         return nphotos;
@@ -70,23 +70,22 @@ export default function GalleryController({
   const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
     const container = document.getElementsByTagName("html")[0];
     const scrollTop = container.scrollTop;
+    // const offsetT
     if (!force && visibleRange.visibleEnd !== 0) {
-      const topThreshold = visibleRange.visibleEnd - buffer;
-      const bottomThreshold = visibleRange.offsetTop + buffer;
-      // console.info({topThreshold, bottomThreshold, scrollTop})
+      const topThreshold = visibleRange.visibleEnd - visibleBuffer;
+      const bottomThreshold = visibleRange.visibleStart;
+      // console.info({scrollTop, topThreshold, bottomThreshold})
       // if (scrollTop <= topThreshold) return;
       if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
     const photoList =
       nphotos || (galleryPhotos.length ? galleryPhotos : photos);
-    // console.info('scrollTop', scrollTop, photoList.length)
-    // Find visible columns based on scroll position
     let startIndex: number | undefined = undefined;
     let endIndex = photoList.length;
-    let offsetTop = 0;
-    let visibleEnd = scrollTop + window.innerHeight + buffer;
-    const numColumns = Math.floor(window.innerWidth / columnWidth); // At least 1 column
-    const heights = Array(numColumns).fill(0); // Initialize column heights to 0
+    const visibleStart = scrollTop - visibleBuffer;
+    const visibleEnd = scrollTop + visibleBuffer + window.innerHeight;
+    const numColumns = Math.floor(window.innerWidth / columnWidth);
+    const heights = Array(numColumns).fill(0);
     let column = 0;
     photoList?.find((photo, index) => {
       try {
@@ -99,17 +98,13 @@ export default function GalleryController({
           heights[column] = { height };
         }
         const galleryHeight = heights[column].height;
-        const startVisibleHeight = scrollTop - buffer;
-        const endVisibleHeight = scrollTop + window.innerHeight + buffer;
         // console.info('visibleHeight', startVisibleHeight, endVisibleHeight)
-        if (galleryHeight > startVisibleHeight && startIndex === undefined) {
-          offsetTop = startVisibleHeight;
+        if (galleryHeight >= visibleStart && startIndex === undefined) {
           startIndex = index;
         }
-        if (galleryHeight > endVisibleHeight) {
+        if (galleryHeight >= visibleEnd) {
           // console.info('endIndex', index)
           endIndex = index;
-          visibleEnd = endVisibleHeight;
           return endIndex;
         }
         column++;
@@ -121,10 +116,17 @@ export default function GalleryController({
     const nvisible = {
       start: startIndex || 0,
       end: endIndex,
-      offsetTop,
+      visibleStart,
       visibleEnd,
     };
-    dispatch(setVisibleRange(nvisible));
+    if (
+      visibleRange.start !== nvisible.start ||
+      visibleRange.end !== nvisible.end
+    ) {
+      console.info(nvisible);
+      dispatch(setVisibleRange(nvisible));
+    }
+
     return nvisible;
   };
 
@@ -147,9 +149,12 @@ export default function GalleryController({
       }
     };
     calculateVisibleRange();
+    const resizeListener = () => calculateVisibleRange();
     window.addEventListener("scroll", listener);
+    window.addEventListener("resize", resizeListener);
     return () => {
       window.removeEventListener("scroll", listener);
+      window.removeEventListener("resize", resizeListener);
     };
   }, [
     page,
