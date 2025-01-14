@@ -36,6 +36,7 @@ export default function PhotoImage({ photoId }: { photoId: string }) {
         left: 0,
         position: "fixed",
         zIndex: 1000000,
+        cursor:'zoom-out',
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
       onClick={goBack}
