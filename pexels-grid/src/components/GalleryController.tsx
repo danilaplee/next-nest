@@ -5,14 +5,12 @@ import { setGallery } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
-import { RefObject, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function GalleryController({
-  galleryRef,
   photos,
   query,
 }: {
-  galleryRef: RefObject<HTMLDivElement | null>;
   photos: Photo[];
   query?: string;
 }) {

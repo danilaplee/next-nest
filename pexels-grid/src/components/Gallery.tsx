@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { Photo } from "pexels";
-import { useRef } from "react";
 import GalleryController from "./GalleryController";
 import { useAppSelector } from "@/store/hooks";
 import { Button } from "@headlessui/react";
@@ -14,7 +13,6 @@ export default function Gallery({
   photos: Photo[];
   query?: string;
 }) {
-  const galleryRef = useRef<HTMLDivElement>(null);
   const galleryPhotos = useAppSelector((state) => state.gallery.galleryImages);
   const photoMerge = galleryPhotos?.length > 0 ? galleryPhotos : photos;
   const router = useRouter();
@@ -33,7 +31,6 @@ export default function Gallery({
       <div
         className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
         style={{ overflow: "scroll" }}
-        ref={galleryRef}
       >
         {photoMerge?.map(({ id, src }) => (
           <Link
@@ -55,11 +52,7 @@ export default function Gallery({
             />
           </Link>
         ))}
-        <GalleryController
-          galleryRef={galleryRef}
-          photos={photos}
-          query={query}
-        />
+        <GalleryController photos={photos} query={query} />
       </div>
     </>
   );
