@@ -14,7 +14,7 @@ const getColumnWidth = () => {
   if (window.innerWidth < 640) columnWidth = window.innerWidth;
   return columnWidth;
 };
-const buffer = 5000; // Add buffer for smoother lazy loading
+const buffer = 7000; // Add buffer for smoother lazy loading
 export default function GalleryController({
   photos,
   query,
@@ -74,7 +74,7 @@ export default function GalleryController({
       const topThreshold = visibleRange.visibleEnd - buffer;
       const bottomThreshold = visibleRange.offsetTop + buffer;
       // console.info({topThreshold, bottomThreshold, scrollTop})
-      if (scrollTop <= topThreshold) return;
+      // if (scrollTop <= topThreshold) return;
       if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
     const photoList =
