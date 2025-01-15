@@ -52,12 +52,12 @@ export default function GalleryController({
               galleryPhotos.find((i) => i.id === p.id) === undefined,
           ) || [];
         const nphotos = [...galleryPhotos, ...photoFiltered];
-        console.info("update gallery", nphotos);
+        // console.info("update gallery", nphotos);
         dispatch(setGallery({ photos: nphotos }));
         calculateVisibleRange(true, nphotos);
         return nphotos;
       } catch (err) {
-        console.error("pagination error", err);
+        // console.error("pagination error", err);
       }
     },
     enabled: (typeof page === "number" && !isNaN(page)) || query !== undefined,
@@ -81,7 +81,7 @@ export default function GalleryController({
       // if (scrollTop <= topThreshold) return;
       if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
-    console.info({ maxScroll, scrollTop, offsetTop });
+    // console.info({ maxScroll, scrollTop, offsetTop });
     const photoList =
       nphotos || (galleryPhotos.length ? galleryPhotos : photos);
     let startIndex: number | undefined = undefined;
@@ -106,7 +106,7 @@ export default function GalleryController({
           startIndex = index;
         }
         if (galleryHeight >= visibleEnd) {
-          console.info("visibleHeight", galleryHeight, index);
+          // console.info("visibleHeight", galleryHeight, index);
           // console.info('endIndex', index)
           endIndex = index;
           return endIndex;
@@ -127,7 +127,7 @@ export default function GalleryController({
     //   visibleRange.start !== nvisible.start ||
     //   visibleRange.end !== nvisible.end
     // ) {
-    console.info(nvisible);
+    // console.info(nvisible);
     dispatch(setVisibleRange(nvisible));
     // }
 
