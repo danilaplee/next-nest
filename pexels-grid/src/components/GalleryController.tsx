@@ -71,8 +71,7 @@ export default function GalleryController({
     const container = document.getElementsByTagName("html")[0];
     const scrollHeight = container.scrollHeight;
     const scrollTop = container.scrollTop;
-    const maxScroll =
-      scrollHeight - window.innerHeight;
+    const maxScroll = scrollHeight - window.innerHeight;
     if (!force && visibleRange.visibleEnd !== 0 && scrollTop < maxScroll) {
       const topThreshold = visibleRange.visibleEnd - visibleBuffer * 0.2;
       const bottomThreshold = visibleRange.visibleStart;
