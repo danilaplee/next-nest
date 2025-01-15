@@ -125,7 +125,7 @@ export default function GalleryController({
       if (
         !galleryQuery.isLoading &&
         !galleryQuery.isError &&
-        (visible?.end as number) >= photoList.length - 10
+        (visible?.end || 0) >= photoList.length - 10
       ) {
         const nextPage =
           typeof page === "number" && !isNaN(page) ? page + 1 : "2";
