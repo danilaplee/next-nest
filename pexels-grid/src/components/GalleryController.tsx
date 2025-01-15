@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { useEffect } from "react";
-const visibleBuffer = window.innerWidth > 700 ? 3000 : 1000;
+const getVisibleBuffer = ()=>window.innerWidth > 700 ? 7000 : 3000;
 const getColumnWidth = () => {
   let columnWidth =
     window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
@@ -22,6 +22,8 @@ export default function GalleryController({
   photos: Photo[];
   query?: string;
 }) {
+  const columnWidth = getColumnWidth();
+  const visibleBuffer = getVisibleBuffer()
   const router = useRouter();
   const params = useSearchParams();
   const page = parseInt(params.get("page") as string, 10);
@@ -33,8 +35,6 @@ export default function GalleryController({
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (initialDispatch) return;
-    // console.info("set initial gallery", photos);
-
     dispatch(setGallery({ photos, initial: true }));
   }, [photos, initialDispatch]);
   const galleryQuery = useQuery({
@@ -52,19 +52,17 @@ export default function GalleryController({
               galleryPhotos.find((i) => i.id === p.id) === undefined,
           ) || [];
         const nphotos = [...galleryPhotos, ...photoFiltered];
-        // console.info("update gallery", nphotos);
         dispatch(setGallery({ photos: nphotos }));
         calculateVisibleRange(true, nphotos);
         return nphotos;
       } catch (err) {
-        // console.error("pagination error", err);
+        console.error("pagination error", err);
       }
     },
     enabled: (typeof page === "number" && !isNaN(page)) || query !== undefined,
     retryDelay: 1000,
   });
 
-  let columnWidth = getColumnWidth();
 
   // Helper: Calculate visible range based on scroll position
   const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
@@ -75,11 +73,8 @@ export default function GalleryController({
     if (!force && visibleRange.visibleEnd !== 0 && scrollTop < maxScroll) {
       const topThreshold = visibleRange.visibleEnd - visibleBuffer * 0.2;
       const bottomThreshold = visibleRange.visibleStart;
-      // console.info({scrollTop, topThreshold, bottomThreshold})
-      // if (scrollTop <= topThreshold) return;
       if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
-    // console.info({ maxScroll, scrollTop, offsetTop });
     const photoList =
       nphotos || (galleryPhotos.length ? galleryPhotos : photos);
     let startIndex: number | undefined = undefined;
@@ -104,15 +99,13 @@ export default function GalleryController({
           startIndex = index;
         }
         if (galleryHeight >= visibleEnd) {
-          // console.info("visibleHeight", galleryHeight, index);
-          // console.info('endIndex', index)
           endIndex = index;
           return endIndex;
         }
         column++;
         if (column > numColumns - 1) column = 0;
       } catch (err) {
-        console.error("error", (err as Error).message);
+        console.error("calculateVisibleRange error", (err as Error).message);
       }
     });
     const nvisible = {
@@ -121,20 +114,12 @@ export default function GalleryController({
       visibleStart,
       visibleEnd,
     };
-    // if (
-    //   visibleRange.start !== nvisible.start ||
-    //   visibleRange.end !== nvisible.end
-    // ) {
-    // console.info(nvisible);
     dispatch(setVisibleRange(nvisible));
-    // }
 
     return nvisible;
   };
 
   useEffect(() => {
-    // const container = document.getElementsByTagName("html")[0];
-    // container.scrollTo({top:})
     const listener = () => {
       const photoList = galleryPhotos.length ? galleryPhotos : photos;
       const visible = calculateVisibleRange();
@@ -166,6 +151,7 @@ export default function GalleryController({
     calculateVisibleRange,
     galleryPhotos,
     visibleRange,
+    initialDispatch,
     photos,
   ]);
 

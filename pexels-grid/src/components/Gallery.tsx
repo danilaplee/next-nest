@@ -18,7 +18,6 @@ export default function Gallery({
     (state) => state.gallery.visibleRange.visibleStart,
   );
   const router = useRouter();
-  // console.info('galleryPhotos', galleryPhotos)
   return (
     <>
       {query ? (
