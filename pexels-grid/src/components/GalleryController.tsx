@@ -69,18 +69,19 @@ export default function GalleryController({
   // Helper: Calculate visible range based on scroll position
   const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
     const container = document.getElementsByTagName("html")[0];
-    const scrollHeight = container.scrollHeight
+    const scrollHeight = container.scrollHeight;
     const scrollTop = container.scrollTop;
-    const offsetTop = container.offsetTop
-    const maxScroll = ((scrollHeight - window.innerHeight) - container.offsetTop) - 2000
+    const offsetTop = container.offsetTop;
+    const maxScroll =
+      scrollHeight - window.innerHeight - container.offsetTop - 2000;
     if (!force && visibleRange.visibleEnd !== 0 && scrollTop < maxScroll) {
-      const topThreshold = visibleRange.visibleEnd - (visibleBuffer * .9);
+      const topThreshold = visibleRange.visibleEnd - visibleBuffer * 0.9;
       const bottomThreshold = visibleRange.visibleStart;
       // console.info({scrollTop, topThreshold, bottomThreshold})
       // if (scrollTop <= topThreshold) return;
       if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
-    console.info({maxScroll, scrollTop, offsetTop})
+    console.info({ maxScroll, scrollTop, offsetTop });
     const photoList =
       nphotos || (galleryPhotos.length ? galleryPhotos : photos);
     let startIndex: number | undefined = undefined;
@@ -105,7 +106,7 @@ export default function GalleryController({
           startIndex = index;
         }
         if (galleryHeight >= visibleEnd) {
-          console.info('visibleHeight', galleryHeight, index)
+          console.info("visibleHeight", galleryHeight, index);
           // console.info('endIndex', index)
           endIndex = index;
           return endIndex;
@@ -126,8 +127,8 @@ export default function GalleryController({
     //   visibleRange.start !== nvisible.start ||
     //   visibleRange.end !== nvisible.end
     // ) {
-      console.info(nvisible);
-      dispatch(setVisibleRange(nvisible));
+    console.info(nvisible);
+    dispatch(setVisibleRange(nvisible));
     // }
 
     return nvisible;
@@ -142,16 +143,15 @@ export default function GalleryController({
       if (
         !galleryQuery.isLoading &&
         !galleryQuery.isError &&
-        visible?.end as number >= (photoList.length - 10)
+        (visible?.end as number) >= photoList.length - 10
       ) {
         const nextPage =
           typeof page === "number" && !isNaN(page) ? page + 1 : "2";
         router.push("?page=" + nextPage, { scroll: false });
       }
     };
-    
-    if(!initialDispatch)
-      calculateVisibleRange();
+
+    if (!initialDispatch) calculateVisibleRange();
 
     const resizeListener = () => calculateVisibleRange();
     window.addEventListener("scroll", listener);

@@ -33,7 +33,10 @@ export default function Gallery({
       ) : null}
       <div
         className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
-        style={{ overflow: "scroll", paddingTop: offsetTop > 0 ? offsetTop : 0 }}
+        style={{
+          overflow: "scroll",
+          paddingTop: offsetTop > 0 ? offsetTop : 0,
+        }}
       >
         {galleryPhotos?.map(({ id, src }) => (
           <Link
