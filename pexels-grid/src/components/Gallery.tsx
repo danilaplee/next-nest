@@ -5,7 +5,6 @@ import GalleryController from "./GalleryController";
 import { useAppSelector } from "@/store/hooks";
 import { Button } from "@headlessui/react";
 import { useRouter } from "next/navigation";
-import GalleryOffsetter from "./GalleryOffsetter";
 
 export default function Gallery({
   photos,
@@ -15,6 +14,9 @@ export default function Gallery({
   query?: string;
 }) {
   const galleryPhotos = useAppSelector((state) => state.gallery.visiblePhotos);
+  const offsetTop = useAppSelector(
+    (state) => state.gallery.visibleRange.visibleStart,
+  );
   const router = useRouter();
   // console.info('galleryPhotos', galleryPhotos)
   return (
@@ -31,9 +33,8 @@ export default function Gallery({
       ) : null}
       <div
         className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
-        style={{ overflow: "scroll" }}
+        style={{ overflow: "scroll", paddingTop: offsetTop > 0 ? offsetTop : 0 }}
       >
-        <GalleryOffsetter />
         {galleryPhotos?.map(({ id, src }) => (
           <Link
             key={id}

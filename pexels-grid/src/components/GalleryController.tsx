@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { useEffect } from "react";
-const visibleBuffer = window.innerWidth > 700 ? 10000 : 3000;
+const visibleBuffer = window.innerWidth > 700 ? 3000 : 1000;
 const getColumnWidth = () => {
   let columnWidth =
     window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
@@ -69,21 +69,24 @@ export default function GalleryController({
   // Helper: Calculate visible range based on scroll position
   const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
     const container = document.getElementsByTagName("html")[0];
+    const scrollHeight = container.scrollHeight
     const scrollTop = container.scrollTop;
-    // const offsetT
-    if (!force && visibleRange.visibleEnd !== 0) {
-      const topThreshold = visibleRange.visibleEnd - visibleBuffer;
+    const offsetTop = container.offsetTop
+    const maxScroll = ((scrollHeight - window.innerHeight) - container.offsetTop) - 2000
+    if (!force && visibleRange.visibleEnd !== 0 && scrollTop < maxScroll) {
+      const topThreshold = visibleRange.visibleEnd - (visibleBuffer * .9);
       const bottomThreshold = visibleRange.visibleStart;
       // console.info({scrollTop, topThreshold, bottomThreshold})
       // if (scrollTop <= topThreshold) return;
       if (scrollTop <= topThreshold && scrollTop >= bottomThreshold) return;
     }
+    console.info({maxScroll, scrollTop, offsetTop})
     const photoList =
       nphotos || (galleryPhotos.length ? galleryPhotos : photos);
     let startIndex: number | undefined = undefined;
     let endIndex = photoList.length;
     const visibleStart = scrollTop - visibleBuffer;
-    const visibleEnd = scrollTop + visibleBuffer + window.innerHeight;
+    const visibleEnd = scrollTop + visibleBuffer;
     const numColumns = Math.floor(window.innerWidth / columnWidth);
     const heights = Array(numColumns).fill(0);
     let column = 0;
@@ -98,11 +101,11 @@ export default function GalleryController({
           heights[column] = { height };
         }
         const galleryHeight = heights[column].height;
-        // console.info('visibleHeight', startVisibleHeight, endVisibleHeight)
         if (galleryHeight >= visibleStart && startIndex === undefined) {
           startIndex = index;
         }
         if (galleryHeight >= visibleEnd) {
+          console.info('visibleHeight', galleryHeight, index)
           // console.info('endIndex', index)
           endIndex = index;
           return endIndex;
@@ -119,36 +122,37 @@ export default function GalleryController({
       visibleStart,
       visibleEnd,
     };
-    if (
-      visibleRange.start !== nvisible.start ||
-      visibleRange.end !== nvisible.end
-    ) {
+    // if (
+    //   visibleRange.start !== nvisible.start ||
+    //   visibleRange.end !== nvisible.end
+    // ) {
       console.info(nvisible);
       dispatch(setVisibleRange(nvisible));
-    }
+    // }
 
     return nvisible;
   };
 
   useEffect(() => {
-    const scrollable = document.getElementsByTagName("html")[0];
+    // const container = document.getElementsByTagName("html")[0];
+    // container.scrollTo({top:})
     const listener = () => {
-      const height = scrollable?.scrollHeight;
-      const top = scrollable?.scrollTop;
       const photoList = galleryPhotos.length ? galleryPhotos : photos;
       const visible = calculateVisibleRange();
       if (
-        height - window.innerHeight * 2 < top &&
         !galleryQuery.isLoading &&
         !galleryQuery.isError &&
-        visible?.end === photoList.length
+        visible?.end as number >= (photoList.length - 10)
       ) {
         const nextPage =
           typeof page === "number" && !isNaN(page) ? page + 1 : "2";
         router.push("?page=" + nextPage, { scroll: false });
       }
     };
-    calculateVisibleRange();
+    
+    if(!initialDispatch)
+      calculateVisibleRange();
+
     const resizeListener = () => calculateVisibleRange();
     window.addEventListener("scroll", listener);
     window.addEventListener("resize", resizeListener);
