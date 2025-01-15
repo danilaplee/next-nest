@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { useEffect } from "react";
-const getVisibleBuffer = ()=>window.innerWidth > 700 ? 7000 : 3000;
+const getVisibleBuffer = () => (window.innerWidth > 700 ? 7000 : 3000);
 const getColumnWidth = () => {
   let columnWidth =
     window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
@@ -23,7 +23,7 @@ export default function GalleryController({
   query?: string;
 }) {
   const columnWidth = getColumnWidth();
-  const visibleBuffer = getVisibleBuffer()
+  const visibleBuffer = getVisibleBuffer();
   const router = useRouter();
   const params = useSearchParams();
   const page = parseInt(params.get("page") as string, 10);
@@ -62,7 +62,6 @@ export default function GalleryController({
     enabled: (typeof page === "number" && !isNaN(page)) || query !== undefined,
     retryDelay: 1000,
   });
-
 
   // Helper: Calculate visible range based on scroll position
   const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
