@@ -12,7 +12,7 @@ services:
       - REDIS_PASSWORD='${REDIS_PASSWORD}'
       - REDIS_PORT='6379'
     ports:
-      - "127.0.0.1:6379:6379"
+      - "6379:6379"
     networks:
       - db-tier
       - default
@@ -26,7 +26,7 @@ services:
       - REDIS_PASSWORD='${REDIS_PASSWORD}'
       - PORT=5256
     ports:
-      - "127.0.0.1:5256:5256"
+      - "5256:5256"
     networks:
       - db-tier
       - default
