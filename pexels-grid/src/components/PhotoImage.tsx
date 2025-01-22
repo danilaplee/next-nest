@@ -4,7 +4,7 @@ import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { Photo } from "pexels";
-import { useServerEnv } from "@/hooks/useServerEnv";
+import { getServerEnv } from "@/utils/getServerEnv";
 
 export default function PhotoImage({
   photoId,
@@ -13,7 +13,6 @@ export default function PhotoImage({
   photoId: string;
   photo?: Photo;
 }) {
-  const {getServerEnv} = useServerEnv()
   const router = useRouter();
   const goBack = () => router.back();
   const galleryImages = useAppSelector((state) => state.gallery.galleryImages);

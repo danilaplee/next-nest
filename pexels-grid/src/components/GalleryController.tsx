@@ -1,5 +1,5 @@
 "use client";
-import { useServerEnv } from "@/hooks/useServerEnv";
+import { getServerEnv } from "@/utils/getServerEnv";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,6 @@ export default function GalleryController({
   photos: Photo[];
   query?: string;
 }) {
-  const {getServerEnv} = useServerEnv()
   const columnWidth = getColumnWidth();
   const visibleBuffer = getVisibleBuffer();
   const router = useRouter();
