@@ -56,4 +56,4 @@ services:
       - API_URL='http://localhost:5256/'
       - PORT=5257
     ports:
-      - "127.0.0.1:5257:5257"
+      - "5257:5257"
