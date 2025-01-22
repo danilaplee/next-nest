@@ -14,16 +14,14 @@ import { PexelsController } from './pexels.controller';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PexelsQueueService } from './pexels.queue';
+import { config } from './config';
 
 @Module({
   imports: [
     CacheModule.register({
       useFactory: async () => {
         const store = await redisStore({
-          socket: {
-            host: 'localhost',
-            port: 6379,
-          },
+          socket: config.redis,
         });
 
         return {
@@ -36,10 +34,7 @@ import { PexelsQueueService } from './pexels.queue';
       {
         name: 'API_SERVICE',
         transport: Transport.REDIS,
-        options: {
-          host: 'localhost',
-          port: 6379,
-        },
+        options: config.redis,
       },
     ]),
     BullModule.forRoot({
