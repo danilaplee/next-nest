@@ -11,7 +11,7 @@ async function bootstrap() {
     });
     await appBackground.listen();
   }
-  else {
+  if(config.apiProducer) {
     const app = await NestFactory.create(AppModule);
     const microserviceRedis = app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.REDIS,

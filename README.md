@@ -6,10 +6,11 @@ This is a demo of integration with a third party image search provider Pexels
 
 - Backend 
   - ```Redis``` running on ```localhost:6379``` or
-  - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASS``` and ```REDIS_PORT``` environment variables
+  - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASSWORD``` and ```REDIS_PORT``` environment variables
   - ```PEXELS_API_KEY``` environment variable
   - ```PORT``` environment variable
   - ```QUEUE_CONSUMER``` environment variable set to ```true```
+  - ```API_PRODUCER``` environment variable set to ```true```
   - Run with
   ``` yarn ```
   ``` yarn start ```
