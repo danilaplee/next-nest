@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   publicRuntimeConfig: {
     SSR_API_URL: process.env.SSR_API_URL,
     PUBLIC_API_URL: process.env.PUBLIC_API_URL,
+  },
+  serverRuntimeConfig:{
+    SSR_API_URL: process.env.SSR_API_URL,
+    PUBLIC_API_URL: process.env.PUBLIC_API_URL,
   }
 };
 
