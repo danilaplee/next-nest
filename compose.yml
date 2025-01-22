@@ -44,12 +44,12 @@ services:
       - PEXELS_API_KEY=${PEXELS_API_KEY}
       - QUEUE_CONSUMER=true
       - REQUESTS_PER_SECOND=1
-    links:
-      - "redis:redis"
     networks:
       - db-tier
       - default
-  pexels-ui:
+  pexels-ui: 
+    depends_on:
+      - pixels-api
     image: 'fiendofsound/pexels-ui:main'
     environment:
       - API_URL='http://localhost:5256/'
