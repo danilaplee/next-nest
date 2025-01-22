@@ -10,7 +10,7 @@ services:
     environment:
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
       - REDIS_PASSWORD='${REDIS_PASSWORD}'
-      - REDIS_PORT='6379'
+      - REDIS_PORT=6379
     networks:
       - db-tier
       - default
@@ -21,8 +21,8 @@ services:
       - redis 
     image: 'fiendofsound/pexels-api:main'
     environment:
-      - REDIS_HOST='redis'
-      - REDIS_PORT='6379'
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - REDIS_PASSWORD='${REDIS_PASSWORD}'
       - PORT=5256
     ports:
@@ -35,12 +35,12 @@ services:
       - redis
     image: 'fiendofsound/pexels-api:main'
     environment:
-      - REDIS_HOST='redis'
-      - REDIS_PORT='6379'
-      - REDIS_PASSWORD='${REDIS_PASSWORD}'
-      - PEXELS_API_KEY='${PEXELS_API_KEY}'
-      - QUEUE_CONSUMER='true'
-      - REQUESTS_PER_SECOND='1'
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - PEXELS_API_KEY=${PEXELS_API_KEY}
+      - QUEUE_CONSUMER=true
+      - REQUESTS_PER_SECOND=1
     links:
       - "redis:redis"
     networks:
