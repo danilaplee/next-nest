@@ -18,7 +18,9 @@ services:
       - default
     volumes:
       - ${REDIS_VOLUME_PATH}:/bitnami/redis/data
-  pexels-api:    
+  pexels-api:   
+    depends_on:
+      - redis 
     image: 'fiendofsound/pexels-api:main'
     environment:
       - REDIS_HOST='redis'
@@ -30,7 +32,9 @@ services:
     networks:
       - db-tier
       - default
-  pexels-queue-consumer:
+  pexels-queue-consumer:   
+    depends_on:
+      - redis
     image: 'fiendofsound/pexels-api:main'
     environment:
       - REDIS_HOST='redis'
