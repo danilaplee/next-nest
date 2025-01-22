@@ -9,7 +9,7 @@ services:
     image: 'bitnami/redis:latest'
     environment:
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
-      - REDIS_PASSWORD='${REDIS_PASSWORD}'
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_PORT=6379
     networks:
       - db-tier
