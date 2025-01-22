@@ -41,7 +41,7 @@ export default function GalleryController({
     queryKey: ["gallery", page, query],
     queryFn: async () => {
       try {
-        const API_URL = (await getServerEnv()).API_URL
+        const API_URL = (await getServerEnv()).API_URL;
         const uri = query
           ? `${API_URL}pexels/search/${query}?page=${page || 1}`
           : API_URL + "pexels/curated/" + page;

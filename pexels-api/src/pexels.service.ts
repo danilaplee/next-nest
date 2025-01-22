@@ -25,7 +25,7 @@ export class PexelsService {
     return this.pexelsClient.videos.search({ query, per_page: perPage, page });
   }
   async getVideo(id: number) {
-    return this.pexelsClient.videos.show({ id })
+    return this.pexelsClient.videos.show({ id });
   }
   async getPhoto(id: number) {
     return this.pexelsClient.photos.show({ id });

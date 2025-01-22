@@ -28,7 +28,7 @@ export default function PhotoImage({
       } catch (err) {
         console.error("err", (err as Error)?.message || err);
       }
-      const API_URL = (await getServerEnv()).API_URL
+      const API_URL = (await getServerEnv()).API_URL;
       const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },

@@ -13,7 +13,7 @@ export class PexelsQueueService {
   ) {
     this.client.connect();
   }
-  
+
   async curated(perPage: number = 100, page: number = 1) {
     const job = await this.pexelsQueue.add('curated', { perPage, page });
     return new Promise((resolve, reject) => {

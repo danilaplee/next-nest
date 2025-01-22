@@ -4,14 +4,14 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { MicroModule } from './micro.module';
 import { config } from './config';
 async function bootstrap() {
-  if(config.isQueueConsumer) {
+  if (config.isQueueConsumer) {
     const appBackground = await NestFactory.createMicroservice(MicroModule, {
       transport: Transport.REDIS,
       options: config.redis,
     });
     await appBackground.listen();
   }
-  if(config.apiProducer) {
+  if (config.apiProducer) {
     const app = await NestFactory.create(AppModule);
     const microserviceRedis = app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.REDIS,
@@ -20,7 +20,7 @@ async function bootstrap() {
         wildcards: true,
       },
     });
-  
+
     app.enableCors();
     await app.startAllMicroservices();
     await microserviceRedis.listen();
