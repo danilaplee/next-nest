@@ -37,6 +37,7 @@ services:
   pexels-queue-consumer:   
     depends_on:
       - redis
+      - pexels-api
     image: 'fiendofsound/pexels-api:main'
     environment:
       - REDIS_HOST=redis
