@@ -21,6 +21,12 @@ export class PexelsService {
   async searchPhotos(query: string, perPage: number = 16, page: number = 1) {
     return this.pexelsClient.photos.search({ query, per_page: perPage, page });
   }
+  async searchVideos(query: string, perPage: number = 16, page: number = 1) {
+    return this.pexelsClient.videos.search({ query, per_page: perPage, page });
+  }
+  async getVideo(id: number) {
+    return this.pexelsClient.videos.show({ id })
+  }
   async getPhoto(id: number) {
     return this.pexelsClient.photos.show({ id });
   }

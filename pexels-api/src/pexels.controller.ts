@@ -41,6 +41,19 @@ export class PexelsController {
     return data;
   }
 
+  @Get('/videos/search/:query')
+  async searchVideos(
+    @Param() params: { query: string },
+    @Query() query: { page: number },
+  ) {
+    const data = await this.pexelsService.searchVideos(
+      params.query,
+      80,
+      query.page,
+    );
+    return data;
+  }
+
   @EventPattern('job_response')
   getNotifications(@Payload() data: string, @Ctx() context: RedisContext) {
     // this.logger.log("job_response", data)

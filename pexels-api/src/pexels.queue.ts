@@ -32,6 +32,17 @@ export class PexelsQueueService {
     });
   }
 
+  async searchVideos(query: string, perPage: number = 16, page: number = 1) {
+    const job = await this.pexelsQueue.add('searchVideos', {
+      query,
+      per_page: perPage,
+      page,
+    });
+    return new Promise((resolve, reject) => {
+      this.requests[job.id] = { resolve, reject };
+    });
+  }
+
   async getPhoto(id: number) {
     const job = await this.pexelsQueue.add('getPhoto', { id });
     return new Promise((resolve, reject) => {
