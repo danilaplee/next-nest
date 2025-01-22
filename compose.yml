@@ -25,7 +25,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD='${REDIS_PASSWORD}'
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
       - PORT=5256
     ports:
       - "5256:5256"
