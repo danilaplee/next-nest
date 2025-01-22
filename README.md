@@ -44,6 +44,13 @@ This is a demo of integration with a third party image search provider Pexels
   - SPA Routing
   - Nested Routing
 
+## Docker Compose
+
+#### The easiest way to run is using docker compose and prebuilt images from dockerhub
+``` git clone 
+cd next-next
+PEXELS_API_KEY='paste-your-apikey' REDIS_VOLUME_PATH='/var/opt/redis' REDIS_PASSWORD='yourpassword123' docker compose up```
+
 ## Screenshots:
 ![search](docs/search.png)
 
