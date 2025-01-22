@@ -50,11 +50,13 @@ This is a demo of integration with a third party image search provider [Pexels](
 ``` 
 git clone git@github.com:danilaplee/next-nest.git
 cd next-nest
+mkdir redis
+chmod 777 redis
 PEXELS_API_KEY='paste-your-apikey' \
 REDIS_VOLUME_PATH=$(pwd)/redis \
 PUBLIC_API_URL='http://localhost:5256/' \
-REDIS_PASSWORD='yourpassword123' \
-docker compose up 
+REDIS_PASSWORD='yourpassword123' \ 
+docker compose up -d
 open http://localhost:5257
 ```
 
