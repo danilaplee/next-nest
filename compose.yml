@@ -13,11 +13,11 @@ services:
       - REDIS_PORT=6379
     networks:
       - db-tier
-      - default
+      # - default
     volumes:
       - ${REDIS_VOLUME_PATH}:/bitnami/redis/data
-    ports:
-      - "127.0.0.1:6379:6379"
+    # ports:
+    #   - "127.0.0.1:6379:6379"
   pexels-api:   
     depends_on:
       - redis 
@@ -47,7 +47,7 @@ services:
       - REQUESTS_PER_SECOND=1
     networks:
       - db-tier
-      - default
+      # - default
   pexels-ui: 
     depends_on:
       - pexels-api
