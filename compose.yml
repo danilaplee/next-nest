@@ -49,7 +49,7 @@ services:
       - default
   pexels-ui: 
     depends_on:
-      - pixels-api
+      - pexels-api
     image: 'fiendofsound/pexels-ui:main'
     environment:
       - API_URL='http://localhost:5256/'
