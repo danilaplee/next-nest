@@ -38,10 +38,7 @@ import { config } from './config';
       },
     ]),
     BullModule.forRoot({
-      connection: {
-        host: 'localhost',
-        port: 6379,
-      },
+      connection: config.redis,
     }),
     BullModule.registerQueue({
       name: 'pexels',
