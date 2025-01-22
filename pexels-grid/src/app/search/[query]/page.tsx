@@ -1,8 +1,9 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
-const API_URL = serverRuntimeConfig.SSR_API_URL;
+// import getConfig from "next/config";
+// const { serverRuntimeConfig } = getConfig();
+// const API_URL = serverRuntimeConfig.SSR_API_URL;
+const API_URL = process.env.SSR_API_URL;
 import { Photos } from "pexels";
 
 export default async function SearchResults({
