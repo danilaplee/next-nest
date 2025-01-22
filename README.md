@@ -1,11 +1,11 @@
 # Pexels Integration Demo
 
-This is a demo of integration with a third party image search provider Pexels
+This is a demo of integration with a third party image search provider [Pexels](https://pexels.com)
 
 ## Requirements
 
 - Backend 
-  - ```Redis``` running on ```localhost:6379``` or
+  - [Redis](https://redis.com) running on ```localhost:6379``` or
   - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASS``` and ```REDIS_PORT``` environment variables
   - ```PEXELS_API_KEY``` environment variable
   - ```PORT``` environment variable
