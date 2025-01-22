@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --experimental-build-mode compile",
-    "start": "next start",
+    "start": "yarn build && next start",
     "format": "prettier --write \"src/**/*.tsx\"",
     "lint": "next lint",
     "docker": "docker build -t pgrid:latest ."
