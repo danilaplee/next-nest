@@ -1,6 +1,6 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-import { API_URL } from "@/config";
+import { SSR_API_URL } from "@/config";
 import { Photos } from "pexels";
 
 export default async function SearchResults({
@@ -10,7 +10,7 @@ export default async function SearchResults({
 }) {
   const p = await params;
   const homeData = (await (
-    await fetch(API_URL + "pexels/search/" + p.query)
+    await fetch(SSR_API_URL + "pexels/search/" + p.query)
   ).json()) as Photos;
   const photos = homeData?.photos;
   return (
