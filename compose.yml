@@ -31,6 +31,7 @@ services:
       - "5256:5256"
     networks:
       - db-tier
+      - default
   pexels-queue-consumer:   
     depends_on:
       - redis
