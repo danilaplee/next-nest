@@ -5,7 +5,7 @@ import { Cron } from '@nestjs/schedule';
 import { Queue } from 'bullmq';
 import { createClient } from 'pexels';
 import { config } from './config';
-const maxRequestsPerSecond = 3;
+const maxRequestsPerSecond = config.maxRequestsPerSecond;
 @Injectable()
 export class PexelsService {
   pexelsClient: ReturnType<typeof createClient>;

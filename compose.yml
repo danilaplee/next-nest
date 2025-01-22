@@ -19,9 +19,17 @@ services:
     environment:
       - REDIS_HOST='redis'
       - PORT=5256
-      - PEXELS_API_KEY='${PEXELS_API_KEY}'
     ports:
       - "127.0.0.1:5256:5256"
+    networks:
+      - db-tier
+  pexels-queue-consumer:
+    image: 'fiendofsound/pexels-api:main'
+    environment:
+      - REDIS_HOST='redis'
+      - PEXELS_API_KEY='${PEXELS_API_KEY}'
+      - QUEUE_CONSUMER='true'
+      - REQUESTS_PER_SECOND='1'
     networks:
       - db-tier
   pexels-ui:

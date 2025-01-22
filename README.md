@@ -9,14 +9,14 @@ This is a demo of integration with a third party image search provider Pexels
   - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASS``` and ```REDIS_PORT``` environment variables
   - ```PEXELS_API_KEY``` environment variable
   - ```PORT``` environment variable
+  - ```QUEUE_CONSUMER``` environment variable set to ```true```
   - Run with
   ``` yarn ```
   ``` yarn start ```
 
 - Frontend
   - ```PORT``` environment variable
-  - ```API_URL``` environment variable pointing to the backend
-  - or ```backend``` running on ```localhost:3000```
+  - ```API_URL``` environment variable pointing to the backend ```http://localhost:3000/```
   - Run with
   ``` yarn ```
   ``` yarn dev ```
