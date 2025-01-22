@@ -26,7 +26,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_USER=bitnami
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PASS=${REDIS_PASSWORD}
       - API_PRODUCER=true
       - PORT=5256
     ports:
@@ -42,7 +42,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_USER=bitnami
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PASS=${REDIS_PASSWORD}
       - PEXELS_API_KEY=${PEXELS_API_KEY}
       - QUEUE_CONSUMER=true
       - REQUESTS_PER_SECOND=1
