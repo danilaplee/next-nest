@@ -1,5 +1,7 @@
 "use client";
-import { PUBLIC_API_URL } from "@/config";
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+const API_URL = publicRuntimeConfig.PUBLIC_API_URL;
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
@@ -42,8 +44,8 @@ export default function GalleryController({
     queryFn: async () => {
       try {
         const uri = query
-          ? `${PUBLIC_API_URL}pexels/search/${query}?page=${page || 1}`
-          : PUBLIC_API_URL + "pexels/curated/" + page;
+          ? `${API_URL}pexels/search/${query}?page=${page || 1}`
+          : API_URL + "pexels/curated/" + page;
         const f = await fetch(uri);
         const d = await f.json();
         const photoFiltered =

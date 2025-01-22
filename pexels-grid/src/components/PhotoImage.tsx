@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
-import { PUBLIC_API_URL } from "@/config";
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
 import { Photo } from "pexels";
 
 export default function PhotoImage({
@@ -28,7 +29,9 @@ export default function PhotoImage({
       } catch (err) {
         console.error("err", (err as Error)?.message || err);
       }
-      const f = await fetch(PUBLIC_API_URL + "pexels/" + photoId);
+      const f = await fetch(
+        publicRuntimeConfig.PUBLIC_API_URL + "pexels/" + photoId,
+      );
       return f.json();
     },
     retryDelay: 1000,
