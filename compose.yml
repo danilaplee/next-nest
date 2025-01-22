@@ -25,7 +25,6 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      # - REDIS_USER=redis
       - REDIS_PASS=${REDIS_PASSWORD}
       - API_PRODUCER=true
       - PORT=5256
@@ -42,7 +41,6 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      # - REDIS_USER=redis
       - REDIS_PASS=${REDIS_PASSWORD}
       - PEXELS_API_KEY=${PEXELS_API_KEY}
       - QUEUE_CONSUMER=true
