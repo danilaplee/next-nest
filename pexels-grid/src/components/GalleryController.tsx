@@ -1,12 +1,11 @@
 "use client";
+import { useServerEnv } from "@/hooks/useServerEnv";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { useEffect } from "react";
-import { config } from "@/config";
-const { API_URL } = config;
 const getVisibleBuffer = () => (window.innerWidth > 700 ? 7000 : 3000);
 const getColumnWidth = () => {
   let columnWidth =
@@ -23,6 +22,7 @@ export default function GalleryController({
   photos: Photo[];
   query?: string;
 }) {
+  const {getServerEnv} = useServerEnv()
   const columnWidth = getColumnWidth();
   const visibleBuffer = getVisibleBuffer();
   const router = useRouter();
@@ -42,6 +42,7 @@ export default function GalleryController({
     queryKey: ["gallery", page, query],
     queryFn: async () => {
       try {
+        const API_URL = (await getServerEnv()).API_URL
         const uri = query
           ? `${API_URL}pexels/search/${query}?page=${page || 1}`
           : API_URL + "pexels/curated/" + page;
