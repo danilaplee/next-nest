@@ -26,6 +26,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - API_PRODUCER=true
       - PORT=5256
     ports:
       - "5256:5256"
