@@ -1,7 +1,5 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
 const API_URL = process.env.SSR_API_URL;
 import { Photos } from "pexels";
 
