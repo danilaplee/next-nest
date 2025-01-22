@@ -16,6 +16,8 @@ services:
       - default
     volumes:
       - ${REDIS_VOLUME_PATH}:/bitnami/redis/data
+    ports:
+      - "6379:6379"
   pexels-api:   
     depends_on:
       - redis 
