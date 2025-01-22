@@ -1,7 +1,5 @@
 "use client";
-import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
-const API_URL = publicRuntimeConfig.PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";

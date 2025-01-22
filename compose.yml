@@ -51,8 +51,8 @@ services:
       - pexels-api
     image: 'fiendofsound/pexels-ui:main'
     environment:
-      - SSR_API_URL=${PUBLIC_API_URL}
-      - PUBLIC_API_URL=${PUBLIC_API_URL}
+      - SSR_API_URL=http://pexels-api:5256/
+      - NEXT_PUBLIC_API_URL=${PUBLIC_API_URL}
       - PORT=5257
     ports:
       - "5257:5257"
