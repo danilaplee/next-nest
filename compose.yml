@@ -13,6 +13,7 @@ services:
       - REDIS_PORT='6379'
     networks:
       - db-tier
+      - default
     volumes:
       - ${REDIS_VOLUME_PATH}:/bitnami/redis/data
   pexels-api:    
@@ -26,6 +27,7 @@ services:
       - "127.0.0.1:5256:5256"
     networks:
       - db-tier
+      - default
   pexels-queue-consumer:
     image: 'fiendofsound/pexels-api:main'
     environment:
@@ -39,6 +41,7 @@ services:
       - "redis:redis"
     networks:
       - db-tier
+      - default
   pexels-ui:
     image: 'fiendofsound/pexels-ui:main'
     environment:
