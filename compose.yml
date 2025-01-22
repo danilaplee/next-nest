@@ -53,7 +53,7 @@ services:
       - pexels-api
     image: 'fiendofsound/pexels-ui:main'
     environment:
-      - API_URL=http://localhost:5256/
+      - API_URL=http://pexels-api:5256/
       - PORT=5257
     ports:
       - "5257:5257"
