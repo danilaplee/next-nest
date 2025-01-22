@@ -49,4 +49,10 @@ export class PexelsQueueService {
       this.requests[job.id] = { resolve, reject };
     });
   }
+  async getVideo(id: number) {
+    const job = await this.pexelsQueue.add('getVideo', { id });
+    return new Promise((resolve, reject) => {
+      this.requests[job.id] = { resolve, reject };
+    });
+  }
 }

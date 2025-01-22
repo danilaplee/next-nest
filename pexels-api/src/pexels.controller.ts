@@ -28,6 +28,11 @@ export class PexelsController {
     return await this.pexelsService.getPhoto(params.id);
   }
 
+  @Get('/video/:id')
+  async getVideo(@Param() params: { id: number }) {
+    return await this.pexelsService.getVideo(params.id);
+  }
+
   @Get('/search/:query')
   async searchPhotos(
     @Param() params: { query: string },
@@ -55,7 +60,7 @@ export class PexelsController {
   }
 
   @EventPattern('job_response')
-  getNotifications(@Payload() data: string, @Ctx() context: RedisContext) {
+  getNotifications(@Payload() data: string) {
     // this.logger.log("job_response", data)
     try {
       const result = JSON.parse(data);
