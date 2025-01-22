@@ -1,0 +1,33 @@
+version: '2'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - db-tier
+    volumes:
+      - /path/to/redis-persistence:/bitnami/redis/data
+  pexels-api:
+    image: 'fiendofsound/pexels-api:main'
+    environment:
+      - REDIS_HOST='redis'
+      - PORT=5256
+      - PEXELS_API_KEY='${PEXELS_API_KEY}'
+    ports:
+      - "127.0.0.1:5256:5256"
+    networks:
+      - db-tier
+  pexels-ui:
+    image: 'fiendofsound/pexels-ui:main'
+    environment:
+      - API_URL='http://localhost:5256/'
+      - PORT='5257'
+    ports:
+      - "127.0.0.1:5257:5257"
