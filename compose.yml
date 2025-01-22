@@ -9,15 +9,18 @@ services:
     image: 'bitnami/redis:latest'
     environment:
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
-      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_PASSWORD='${REDIS_PASSWORD}'
+      - REDIS_PORT='6379'
     networks:
       - db-tier
     volumes:
-      - /path/to/redis-persistence:/bitnami/redis/data
-  pexels-api:
+      - ${REDIS_VOLUME_PATH}:/bitnami/redis/data
+  pexels-api:    
     image: 'fiendofsound/pexels-api:main'
     environment:
       - REDIS_HOST='redis'
+      - REDIS_PORT='6379'
+      - REDIS_PASSWORD='${REDIS_PASSWORD}'
       - PORT=5256
     ports:
       - "127.0.0.1:5256:5256"
@@ -27,9 +30,13 @@ services:
     image: 'fiendofsound/pexels-api:main'
     environment:
       - REDIS_HOST='redis'
+      - REDIS_PORT='6379'
+      - REDIS_PASSWORD='${REDIS_PASSWORD}'
       - PEXELS_API_KEY='${PEXELS_API_KEY}'
       - QUEUE_CONSUMER='true'
       - REQUESTS_PER_SECOND='1'
+    links:
+      - "redis:redis"
     networks:
       - db-tier
   pexels-ui:
