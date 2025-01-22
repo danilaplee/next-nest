@@ -1,9 +1,6 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-// import getConfig from "next/config";
-// const { serverRuntimeConfig } = getConfig();
-// const API_URL = serverRuntimeConfig.SSR_API_URL;
-const API_URL = process.env.SSR_API_URL;
+import { config } from "@/config";
 import { Photos } from "pexels";
 
 export default async function SearchResults({
@@ -13,7 +10,7 @@ export default async function SearchResults({
 }) {
   const p = await params;
   const homeData = (await (
-    await fetch(API_URL + "pexels/search/" + p.query)
+    await fetch(config.SSR_API_URL + "pexels/search/" + p.query)
   ).json()) as Photos;
   const photos = homeData?.photos;
   return (

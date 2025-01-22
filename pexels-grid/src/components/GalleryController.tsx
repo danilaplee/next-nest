@@ -1,11 +1,12 @@
 "use client";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo } from "pexels";
 import { useEffect } from "react";
+import { config } from "@/config";
+const { API_URL } = config;
 const getVisibleBuffer = () => (window.innerWidth > 700 ? 7000 : 3000);
 const getColumnWidth = () => {
   let columnWidth =

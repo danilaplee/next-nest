@@ -1,10 +1,12 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
-const API_URL = process.env.SSR_API_URL;
+import { config } from "@/config";
 import { Photos } from "pexels";
 
 export default async function Home() {
-  const homeData = (await (await fetch(API_URL + "pexels")).json()) as Photos;
+  const homeData = (await (
+    await fetch(config.SSR_API_URL + "pexels")
+  ).json()) as Photos;
   const photos = homeData?.photos;
   return (
     <div className="grid items-center justify-items-center min-h-screen">

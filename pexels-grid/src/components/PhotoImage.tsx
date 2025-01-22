@@ -4,6 +4,8 @@ import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { Photo } from "pexels";
+import { config } from "@/config";
+const { API_URL } = config;
 
 export default function PhotoImage({
   photoId,
@@ -27,9 +29,7 @@ export default function PhotoImage({
       } catch (err) {
         console.error("err", (err as Error)?.message || err);
       }
-      const f = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "pexels/" + photoId,
-      );
+      const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },
     retryDelay: 1000,
