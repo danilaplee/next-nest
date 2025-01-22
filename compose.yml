@@ -52,7 +52,7 @@ services:
     image: 'fiendofsound/pexels-ui:main'
     environment:
       - SSR_API_URL=${PUBLIC_API_URL}
-      - NEXT_PUBLIC_API_URL=${PUBLIC_API_URL}
+      - PUBLIC_API_URL=${PUBLIC_API_URL}
       - PORT=5257
     networks:
       - default
