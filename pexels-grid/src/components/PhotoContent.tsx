@@ -26,7 +26,7 @@ export function PhotoContent({
           backgroundAttachment: "fixed",
           backgroundSize: "contain",
         }}
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
         loop={true}
         onClick={goBack}
       />
@@ -44,7 +44,6 @@ export function PhotoContent({
         backgroundAttachment: "fixed",
         backgroundSize: "contain",
       }}
-      crossorigin="anonymous"
       onClick={goBack}
     />
   );
