@@ -43,7 +43,11 @@ export default function Gallery({
           <Link
             key={media.id}
             href={video ? `/videos/p/${media.id}` : `/p/${media.id}`}
-            shallow
+            as={video ? `/videos/p/${media.id}` : `/p/${media.id}`}
+            // replace={true}
+            // shallow={true}
+            prefetch={false}
+            // prefer={""}
             className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
           >
             <img
