@@ -47,20 +47,22 @@ open http://localhost:5257
 - Backend 
   #### This will setup a local server with live updates for you
   - [Redis](https://redis.com) running on [localhost:6379](localhost:6379)
-  - ```PEXELS_API_KEY``` the key that you can get from the [pexels website](https://pexels.com) after registering
-  - ```QUEUE_CONSUMER``` environment variable set to ```true```
-  - ```API_PRODUCER``` environment variable set to ```true```
+  - ```PEXELS_API_KEY``` environment variable set to the key that you can get from the [pexels website](https://pexels.com) after registering
   - Run with
-  ``` yarn ```
-  ``` yarn start ```
+  ``` 
+  yarn 
+  QUEUE_CONSUMER='true' API_PRODUCER='true' yarn start 
+  ```
 
 - Frontend
   #### This will setup a local client with live updates for you
   - ```PORT``` by default ```3000``` or ```3001``` if backend running
   - ```API_URL``` by default is set to [http://localhost:3000/](http://localhost:3000/)
   - Run with
-  ``` yarn ```
-  ``` yarn dev ```
+  ``` 
+  yarn 
+  yarn dev 
+  ```
 
 ## More Screenshots:
 
