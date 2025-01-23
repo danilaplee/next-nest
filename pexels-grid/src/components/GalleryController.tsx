@@ -12,7 +12,7 @@ const getColumnWidth = () => {
     window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
   if (window.innerWidth < 1280) columnWidth = window.innerWidth / 2;
 
-  if (window.innerWidth < 640) columnWidth = window.innerWidth;
+  // if (window.innerWidth < 640) columnWidth = window.innerWidth;
   return columnWidth;
 };
 export default function GalleryController({

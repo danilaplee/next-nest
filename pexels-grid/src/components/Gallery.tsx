@@ -33,7 +33,7 @@ export default function Gallery({
         </div>
       ) : null}
       <div
-        className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
+        className="columns-2 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
         style={{
           overflow: "scroll",
           paddingTop: offsetTop > 0 ? offsetTop : 0,
@@ -53,8 +53,7 @@ export default function Gallery({
               width={720}
               height={480}
               loading="lazy"
-              sizes="(max-width: 640px) 100vw,
-            (max-width: 1280px) 50vw,
+              sizes="(max-width: 1280px) 50vw,
             (max-width: 1536px) 33vw,
             25vw"
             />
