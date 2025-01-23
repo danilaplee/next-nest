@@ -44,7 +44,7 @@ export class PexelsService {
         try {
           await this.pexelsQueue.updateJobProgress(job.id, 10);
           const response = await this[job.name](...Object.values(job.data));
-          if (!response.id && !response.photos) throw 'invalid_response';
+          if (!response.id && !response.photos && !response.videos) throw 'invalid_response';
           console.info('res for job', JSON.stringify(response).length, job.id);
           await this.pexelsQueue.remove(job.id);
           this.client.emit('job_response', JSON.stringify({ response, job }));
