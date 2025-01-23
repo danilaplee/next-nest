@@ -7,8 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo, Video } from "pexels";
 import { useEffect } from "react";
-const getVisibleBuffer = () => (window.innerWidth > 700 ? 7000 : 3000);
+const getVisibleBuffer = () => (typeof window !== undefined ? window.innerWidth > 700 ? 7000 : 3000 : 3000);
 const getColumnWidth = () => {
+  if(typeof window === undefined) {
+    return 640
+  }
   let columnWidth =
     window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
   if (window.innerWidth < 1280) columnWidth = window.innerWidth / 2;
