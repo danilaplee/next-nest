@@ -1,42 +1,21 @@
-"use client";
-import { useRouter } from "next/navigation";
+// "use client";
+// import { useRouter } from "next/navigation";
 import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { Photo, Video } from "pexels";
+import { BackButton } from "./BackButton";
+import { PhotoContent } from "./PhotoContent";
 
 export default function PhotoImage({
-  photoId,
-  photo: photoSSR,
+  photo,
   video,
-  API_URL
 }: {
   photoId: string;
-  photo?: Photo;
+  photo?: Photo | Video;
   video?: boolean;
-  API_URL:string;
+  API_URL: string;
 }) {
-  const router = useRouter();
-  const goBack = () => router.back();
-  const galleryImages = useAppSelector((state) => state.gallery.galleryImages);
-  const photoQuery = useQuery({
-    queryKey: ["photo", photoId],
-    queryFn: async () => {
-      try {
-        if (photoSSR?.id) return photoSSR.id;
-        const galleryImage = galleryImages?.find(
-          (i) => i.id === parseInt(photoId, 10),
-        );
-        if (galleryImage) return galleryImage;
-      } catch (err) {
-        console.error("err", (err as Error)?.message || err);
-      }
-      const f = await fetch(API_URL + "pexels/" + photoId);
-      return f.json();
-    },
-    retryDelay: 1000,
-  });
-  const photo = video ? (photoQuery.data as Video) : (photoQuery.data as Photo);
   return (
     <div
       className="row-start-3 flex gap-6 flex-wrap items-center justify-center"
@@ -50,52 +29,12 @@ export default function PhotoImage({
         cursor: "zoom-out",
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
-      onClick={goBack}
+      // onClick={goBack}
     >
-      <Button
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          cursor: "pointer",
-          zIndex: 1000,
-          // fontSize: 32
-        }}
-        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-      >
-        &lt; Back
-      </Button>
+      <BackButton />
       {photo?.id !== undefined ? (
         <>
-          {!video ? (
-            <div
-              style={{
-                backgroundImage: `url(${(photo as Photo)?.src?.large2x})`,
-                height: "100%",
-                width: "100%",
-                position: "absolute",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                backgroundAttachment: "fixed",
-                backgroundSize: "contain",
-              }}
-            />
-          ) : (
-            <video
-              src={(photo as Video)?.video_files?.[0]?.link}
-              autoPlay={true}
-              muted={true}
-              style={{
-                height: "100%",
-                width: "100%",
-                position: "absolute",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                backgroundAttachment: "fixed",
-                backgroundSize: "contain",
-              }}
-            />
-          )}
+          <PhotoContent photo={photo} video={video} />
           <div
             style={{
               position: "fixed",
@@ -103,6 +42,8 @@ export default function PhotoImage({
               right: 20,
               padding: 10,
               borderRadius: 20,
+              // height: "100%",
+              // width: "100%",
               backgroundColor: "rgba(0,0,0,0.7)",
             }}
           >
@@ -111,7 +52,11 @@ export default function PhotoImage({
                 {(photo as Photo)?.alt || "Untitled"} by{" "}
                 {(photo as Photo)?.photographer}
               </h1>
-            ) : null}
+            ) : (
+              <h1>
+                {"Untitled"} by {(photo as Video)?.user.name}
+              </h1>
+            )}
           </div>
         </>
       ) : null}
