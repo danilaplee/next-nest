@@ -10,8 +10,6 @@ RUN yarn
 
 RUN yarn build
 
-RUN rm -rf node_modules
-
 FROM node:20-alpine
 
 RUN mkdir -p /home/node/app
