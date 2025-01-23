@@ -4,7 +4,7 @@ import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { Photo, Video } from "pexels";
-import { getServerEnv } from "@/utils/getServerEnv";
+import { dynamicConfig } from "@/utils/dynamicConfig";
 
 export default function PhotoImage({
   photoId,
@@ -30,7 +30,7 @@ export default function PhotoImage({
       } catch (err) {
         console.error("err", (err as Error)?.message || err);
       }
-      const API_URL = (await getServerEnv()).API_URL;
+      const API_URL = dynamicConfig?.API_URL;
       const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },

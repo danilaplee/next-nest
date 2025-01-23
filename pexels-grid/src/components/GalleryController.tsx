@@ -1,5 +1,5 @@
 "use client";
-import { getServerEnv } from "@/utils/getServerEnv";
+import { dynamicConfig } from "@/utils/dynamicConfig";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
@@ -43,7 +43,7 @@ export default function GalleryController({
     queryKey: ["gallery", page, query],
     queryFn: async () => {
       try {
-        const API_URL = (await getServerEnv()).API_URL;
+        const API_URL = dynamicConfig?.API_URL;
         let uri = query
           ? `${API_URL}pexels/search/${query}?page=${page || 1}`
           : API_URL + "pexels/curated/" + page;
