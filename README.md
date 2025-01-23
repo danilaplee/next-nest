@@ -27,7 +27,7 @@ This is a demo of integration with a third party image search provider [Pexels](
 
 ## Docker Compose
 
-#### The easiest way to run is using [docker-compose](https://docs.docker.com/compose/) and prebuilt images from [dockerhub](hub.docker.com) it will automatically setup redis and routing between services you will have the client running on [http://localhost:5257](http://localhost:5257)
+#### The easiest way to run is using [docker-compose file provided](https://github.com/danilaplee/next-nest/blob/main/compose.yml) and prebuilt images from [dockerhub](https://github.com/danilaplee/next-nest/blob/main/.github/workflows/docker.yml) it will automatically setup redis and routing between services you will have the client running on [http://localhost:5257](http://localhost:5257)
 
 ``` 
 git clone git@github.com:danilaplee/next-nest.git
