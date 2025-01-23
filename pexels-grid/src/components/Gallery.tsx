@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Photo } from "pexels";
+import { Photo, Video } from "pexels";
 import GalleryController from "./GalleryController";
 import { useAppSelector } from "@/store/hooks";
 import { Button } from "@headlessui/react";
@@ -11,7 +11,7 @@ export default function Gallery({
   query,
   video,
 }: {
-  photos: Photo[];
+  photos: Photo[] | Video[];
   query?: string;
   video?: boolean;
 }) {
@@ -39,17 +39,17 @@ export default function Gallery({
           paddingTop: offsetTop > 0 ? offsetTop : 0,
         }}
       >
-        {galleryPhotos?.map(({ id, src }) => (
+        {galleryPhotos?.map((media) => (
           <Link
-            key={id}
-            href={`/p/${id}`}
+            key={media.id}
+            href={video ? `/videos/p/${media.id}` : `/p/${media.id}`}
             shallow
             className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
           >
             <img
               className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
               style={{ transform: "translate3d(0, 0, 0)" }}
-              src={src.medium}
+              src={(media as Photo).src?.medium || (media as Video)?.image}
               width={720}
               height={480}
               loading="lazy"

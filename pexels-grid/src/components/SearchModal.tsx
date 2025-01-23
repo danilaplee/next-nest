@@ -58,7 +58,7 @@ export function SearchModal({ video }: { video?: boolean }) {
                 as="h3"
                 className="text-base/7 font-medium text-white"
               >
-                Search Photos
+                {video ? "Search Video" : "Search Photos"}
               </DialogTitle>
               <Field>
                 <Input

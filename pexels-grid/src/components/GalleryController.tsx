@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setGallery, setVisibleRange } from "@/store/slices/gallery";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Photo } from "pexels";
+import { Photo, Video } from "pexels";
 import { useEffect } from "react";
 const getVisibleBuffer = () => (window.innerWidth > 700 ? 7000 : 3000);
 const getColumnWidth = () => {
@@ -18,8 +18,9 @@ const getColumnWidth = () => {
 export default function GalleryController({
   photos,
   query,
+  video,
 }: {
-  photos: Photo[];
+  photos: Photo[] | Video[];
   query?: string;
   video?: boolean;
 }) {
@@ -43,13 +44,16 @@ export default function GalleryController({
     queryFn: async () => {
       try {
         const API_URL = (await getServerEnv()).API_URL;
-        const uri = query
+        let uri = query
           ? `${API_URL}pexels/search/${query}?page=${page || 1}`
           : API_URL + "pexels/curated/" + page;
+        if (video) {
+          uri = `${API_URL}pexels/videos/search/${query || "cats"}?page=${page || 1}`;
+        }
         const f = await fetch(uri);
         const d = await f.json();
         const photoFiltered =
-          d?.photos?.filter(
+          (d?.photos || d?.videos)?.filter(
             (p: Photo) =>
               galleryPhotos.find((i) => i.id === p.id) === undefined,
           ) || [];

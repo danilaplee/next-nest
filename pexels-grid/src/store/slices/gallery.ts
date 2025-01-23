@@ -1,11 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import { Photo } from 'pexels';
+import { Photo, Video } from 'pexels';
 export type VisibleRange = {start:number, end:number, visibleStart:number, visibleEnd:number}
 export interface GalleryState {
-  galleryImages: Photo[],
+  galleryImages: Photo[] | Video[],
   visibleRange:VisibleRange
-  visiblePhotos:Photo[]
+  visiblePhotos:Photo[] | Video[]
   initalDispatch:boolean;
 }
 
@@ -22,7 +22,7 @@ export const GallerySlice = createSlice({
   reducers: {
     setGallery: (
       state,
-      action: PayloadAction<{photos:Photo[], initial?:boolean}>,
+      action: PayloadAction<{photos:Photo[] | Video[], initial?:boolean}>,
     ) => {
       state.galleryImages = action.payload.photos
       if(action.payload.initial)
