@@ -1,7 +1,7 @@
 import Gallery from "@/components/Gallery";
 import StorageWrapper from "@/components/StorageWrapper";
 import { config } from "@/config";
-import { Videos } from "pexels";
+import { type Videos } from "pexels";
 
 export default async function SearchResults({
   params,

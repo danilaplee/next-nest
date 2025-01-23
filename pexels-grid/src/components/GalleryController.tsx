@@ -7,18 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Photo, Video } from "pexels";
 import { useEffect } from "react";
-const getVisibleBuffer = () => (typeof window !== undefined ? window.innerWidth > 700 ? 7000 : 3000 : 3000);
-const getColumnWidth = () => {
-  if(typeof window === undefined) {
-    return 640
-  }
-  let columnWidth =
-    window.innerWidth < 1536 ? window.innerWidth * 0.33 : window.innerWidth / 4;
-  if (window.innerWidth < 1280) columnWidth = window.innerWidth / 2;
-
-  // if (window.innerWidth < 640) columnWidth = window.innerWidth;
-  return columnWidth;
-};
 export default function GalleryController({
   photos,
   query,
@@ -28,6 +16,25 @@ export default function GalleryController({
   query?: string;
   video?: boolean;
 }) {
+  const getVisibleBuffer = () =>
+    typeof window !== "undefined"
+      ? window?.innerWidth > 700
+        ? 7000
+        : 3000
+      : 3000;
+  const getColumnWidth = () => {
+    if (typeof window === "undefined") {
+      return 640;
+    }
+    let columnWidth =
+      window?.innerWidth < 1536
+        ? window?.innerWidth * 0.33
+        : window?.innerWidth / 4;
+    if (window?.innerWidth < 1280) columnWidth = window?.innerWidth / 2;
+
+    // if (window.innerWidth < 640) columnWidth = window.innerWidth;
+    return columnWidth;
+  };
   const columnWidth = getColumnWidth();
   const visibleBuffer = getVisibleBuffer();
   const router = useRouter();
@@ -75,6 +82,9 @@ export default function GalleryController({
 
   // Helper: Calculate visible range based on scroll position
   const calculateVisibleRange = (force?: boolean, nphotos?: Photo[]) => {
+    if (typeof window === "undefined") {
+      return;
+    }
     const container = document.getElementsByTagName("html")[0];
     const scrollHeight = container.scrollHeight;
     const scrollTop = container.scrollTop;
@@ -129,6 +139,9 @@ export default function GalleryController({
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return () => {};
+    }
     const listener = () => {
       const photoList = galleryPhotos.length ? galleryPhotos : photos;
       const visible = calculateVisibleRange();
