@@ -9,9 +9,11 @@ import { getServerEnv } from "@/utils/getServerEnv";
 export default function PhotoImage({
   photoId,
   photo: photoSSR,
+  video,
 }: {
   photoId: string;
   photo?: Photo;
+  video?: boolean;
 }) {
   const router = useRouter();
   const goBack = () => router.back();

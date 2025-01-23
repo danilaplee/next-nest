@@ -12,7 +12,7 @@ import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setQuery, setSearchState } from "@/store/slices/search";
 import { useRef } from "react";
-export function SearchModal() {
+export function SearchModal({ video }: { video?: boolean }) {
   const router = useRouter();
   const goBack = () => router.back();
   const dispatch = useAppDispatch();
@@ -20,7 +20,10 @@ export function SearchModal() {
   const searchState = useAppSelector((state) => state.search.searchState);
   const doSearch = async () => {
     if (typeof searchQuery === "string") {
-      router.push("/search/" + encodeURIComponent(searchQuery));
+      router.push(
+        (video ? "/videos/search/" : "/search/") +
+          encodeURIComponent(searchQuery),
+      );
       dispatch(setSearchState("loaded"));
     }
   };

@@ -21,6 +21,7 @@ export default function GalleryController({
 }: {
   photos: Photo[];
   query?: string;
+  video?: boolean;
 }) {
   const columnWidth = getColumnWidth();
   const visibleBuffer = getVisibleBuffer();

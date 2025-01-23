@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 export default function Gallery({
   photos,
   query,
+  video,
 }: {
   photos: Photo[];
   query?: string;
+  video?: boolean;
 }) {
   const galleryPhotos = useAppSelector((state) => state.gallery.visiblePhotos);
   const offsetTop = useAppSelector(
@@ -58,7 +60,7 @@ export default function Gallery({
             />
           </Link>
         ))}
-        <GalleryController photos={photos} query={query} />
+        <GalleryController video={video} photos={photos} query={query} />
       </div>
     </>
   );
