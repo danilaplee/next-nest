@@ -30,7 +30,7 @@ export default function PhotoImage({
       } catch (err) {
         console.error("err", (err as Error)?.message || err);
       }
-      const API_URL = dynamicConfig?.API_URL;
+      const API_URL = (await dynamicConfig).API_URL;
       const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },
