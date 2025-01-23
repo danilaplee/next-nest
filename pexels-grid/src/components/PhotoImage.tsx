@@ -4,16 +4,17 @@ import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { Photo, Video } from "pexels";
-import { dynamicConfig } from "@/utils/dynamicConfig";
 
 export default function PhotoImage({
   photoId,
   photo: photoSSR,
   video,
+  API_URL
 }: {
   photoId: string;
   photo?: Photo;
   video?: boolean;
+  API_URL:string;
 }) {
   const router = useRouter();
   const goBack = () => router.back();
@@ -30,7 +31,6 @@ export default function PhotoImage({
       } catch (err) {
         console.error("err", (err as Error)?.message || err);
       }
-      const API_URL = (await dynamicConfig).API_URL;
       const f = await fetch(API_URL + "pexels/" + photoId);
       return f.json();
     },

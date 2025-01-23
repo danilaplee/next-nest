@@ -9,7 +9,9 @@ export default async function PhotoPage({
   const p = await params;
   return (
     <StorageWrapper>
-      <PhotoImage photoId={p.id} video={true} />
+      <div>
+        <PhotoImage photoId={p.id} video={true} />
+      </div>
     </StorageWrapper>
   );
 }
