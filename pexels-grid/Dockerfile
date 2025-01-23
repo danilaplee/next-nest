@@ -14,7 +14,9 @@ RUN rm -rf node_modules
 
 FROM node:20-alpine
 
-COPY --from=builder /home/node/app/ /home/node/app/
+RUN mkdir -p /home/node/app
+
+COPY --from=builder /home/node/app/.next /home/node/app/.next
 
 WORKDIR /home/node/app/
 
