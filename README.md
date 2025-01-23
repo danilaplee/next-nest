@@ -27,8 +27,7 @@ This is a demo of integration with a third party image search provider [Pexels](
 
 ## Docker Compose
 
-#### The easiest way to run is using docker compose and prebuilt images from dockerhub it will automatically setup redis and routing between services you will have the client running on 
-```http://localhost:5257```
+#### The easiest way to run is using [docker-compose](https://docs.docker.com/compose/) and prebuilt images from [dockerhub](hub.docker.com) it will automatically setup redis and routing between services you will have the client running on [http://localhost:5257](http://localhost:5257)
 
 ``` 
 git clone git@github.com:danilaplee/next-nest.git
@@ -46,10 +45,9 @@ open http://localhost:5257
 ## Requirements For Development
 
 - Backend 
-  - [Redis](https://redis.com) running on ```localhost:6379``` or
-  - ```REDIS_HOST```, ```REDIS_USER```, ```REDIS_PASS``` and ```REDIS_PORT``` environment variables
-  - ```PEXELS_API_KEY``` environment variable
-  - ```PORT``` environment variable
+  #### This will setup a local server with live updates for you
+  - [Redis](https://redis.com) running on [localhost:6379](localhost:6379)
+  - ```PEXELS_API_KEY``` the key that you can get from the [pexels website](https://pexels.com) after registering
   - ```QUEUE_CONSUMER``` environment variable set to ```true```
   - ```API_PRODUCER``` environment variable set to ```true```
   - Run with
@@ -57,8 +55,9 @@ open http://localhost:5257
   ``` yarn start ```
 
 - Frontend
-  - ```PORT``` environment variable
-  - ```API_URL``` environment variable pointing to the backend ```http://localhost:3000/```
+  #### This will setup a local client with live updates for you
+  - ```PORT``` by default ```3000``` or ```3001``` if backend running
+  - ```API_URL``` by default is set to [http://localhost:3000/](http://localhost:3000/)
   - Run with
   ``` yarn ```
   ``` yarn dev ```
