@@ -107,7 +107,7 @@ export default function GalleryController({
       try {
         if (!photo?.width || !photo?.height) return; // Skip invalid photos
         const aspectRatio = photo.height / photo.width;
-        const height = columnWidth * aspectRatio;
+        const height = columnWidth * aspectRatio
         if (heights[column]) {
           heights[column].height += height;
         } else {
