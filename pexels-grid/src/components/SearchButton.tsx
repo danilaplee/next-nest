@@ -24,7 +24,7 @@ export default function SearchButton({ video }: { video?: boolean }) {
         onClick={() => {
           dispatch(setSearchState("init"));
           dispatch(setGallery({ photos: [] }));
-          router.replace(video ? "/videos/search" : "/search");
+          router.push(video ? "/videos/search" : "/search");
         }}
       >
         Search
