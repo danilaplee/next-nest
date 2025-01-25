@@ -114,9 +114,9 @@ export default function GalleryController({
         } else {
           heights[column] = { height };
         }
-        const galleryHeight = Object
-        .values(heights)
-        .sort(({height:heightA}, {height:heightB}) => (heightB - heightA))[0].height;
+        const galleryHeight = Object.values(heights).sort(
+          ({ height: heightA }, { height: heightB }) => heightB - heightA,
+        )[0].height;
         if (
           galleryHeight >= visibleStart &&
           startIndex === undefined &&
