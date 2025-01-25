@@ -114,26 +114,26 @@ export default function GalleryController({
         } else {
           heights[column] = { height };
         }
-        return Object.keys(heights).find((h) => {
-          const galleryHeight = heights[h as keyof typeof heights].height;
-          if (
-            galleryHeight >= visibleStart &&
-            startIndex === undefined &&
-            column === 0
-          ) {
-            startIndex = index;
-          }
-          if (
-            galleryHeight >= visibleEnd &&
-            column === numColumns - 1 &&
-            !endIndex
-          ) {
-            endIndex = index;
-            return endIndex;
-          }
-          column++;
-          if (column > numColumns - 1) column = 0;
-        });
+        const galleryHeight = Object
+        .values(heights)
+        .sort(({height:heightA}, {height:heightB}) => (heightB - heightA))[0].height;
+        if (
+          galleryHeight >= visibleStart &&
+          startIndex === undefined &&
+          column === 0
+        ) {
+          startIndex = index;
+        }
+        if (
+          galleryHeight >= visibleEnd &&
+          column === numColumns - 1 &&
+          !endIndex
+        ) {
+          endIndex = index;
+          return endIndex;
+        }
+        column++;
+        if (column > numColumns - 1) column = 0;
       } catch (err) {
         console.error("calculateVisibleRange error", (err as Error).message);
       }
