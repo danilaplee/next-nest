@@ -35,7 +35,7 @@ export default function Gallery({
       <div
         className="columns-2 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4"
         style={{
-          overflow: "scroll",
+          overflow: "hidden",
           paddingTop: offsetTop > 0 ? offsetTop : 0,
         }}
       >
