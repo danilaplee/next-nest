@@ -19,9 +19,9 @@ export default function GalleryController({
   const getVisibleBuffer = () =>
     typeof window !== "undefined"
       ? window?.innerWidth > 700
-        ? 7000
-        : 3000
-      : 3000;
+        ? 10000
+        : 6000
+      : 6000;
   const getColumnWidth = () => {
     if (typeof window === "undefined") {
       return 640;
@@ -74,6 +74,7 @@ export default function GalleryController({
         return nphotos;
       } catch (err) {
         console.error("pagination error", err);
+        return [];
       }
     },
     enabled: (typeof page === "number" && !isNaN(page)) || query !== undefined,
@@ -113,16 +114,26 @@ export default function GalleryController({
         } else {
           heights[column] = { height };
         }
-        const galleryHeight = heights[column].height;
-        if (galleryHeight >= visibleStart && startIndex === undefined) {
-          startIndex = index;
-        }
-        if (galleryHeight >= visibleEnd) {
-          endIndex = index;
-          return endIndex;
-        }
-        column++;
-        if (column > numColumns - 1) column = 0;
+        return Object.keys(heights).find((h) => {
+          const galleryHeight = heights[h as keyof typeof heights].height;
+          if (
+            galleryHeight >= visibleStart &&
+            startIndex === undefined &&
+            column === 0
+          ) {
+            startIndex = index;
+          }
+          if (
+            galleryHeight >= visibleEnd &&
+            column === numColumns - 1 &&
+            !endIndex
+          ) {
+            endIndex = index;
+            return endIndex;
+          }
+          column++;
+          if (column > numColumns - 1) column = 0;
+        });
       } catch (err) {
         console.error("calculateVisibleRange error", (err as Error).message);
       }
