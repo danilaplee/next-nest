@@ -15,7 +15,6 @@ export default async function PhotoPage({
       config.SSR_API_URL + (video ? "pexels/video/" : "pexels/") + p.id,
     )
   ).json();
-  // console.info("photo", photo, {video});
   return (
     <StorageWrapper>
       <PhotoImage

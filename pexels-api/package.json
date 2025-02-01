@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docker":"docker build -t pmicro:latest ."
+    "docker": "docker build -t pmicro:latest ."
   },
   "dependencies": {
     "@nestjs/bullmq": "^10.2.3",
@@ -35,6 +35,7 @@
     "cache-manager-redis-store": "^3.0.1",
     "cache-manager-redis-yet": "^5.1.5",
     "ioredis": "^5.4.2",
+    "naughty-words": "^1.2.0",
     "pexels": "^1.4.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"

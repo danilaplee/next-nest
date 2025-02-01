@@ -5,7 +5,14 @@ import { Cron } from '@nestjs/schedule';
 import { Queue } from 'bullmq';
 import { createClient } from 'pexels';
 import { config } from './config';
+import * as naughty from 'naughty-words'
+const allNaughtyWords = Object.values(naughty).flat() as string[]
+console.info('allNaughtyWords', allNaughtyWords)
 const maxRequestsPerSecond = config.maxRequestsPerSecond;
+const replaceAllNaughty = (query:string) => {
+  let cleanquery = allNaughtyWords.reduce((a,i)=>a.replaceAll(i, ''), query);
+  return cleanquery
+}
 @Injectable()
 export class PexelsService {
   pexelsClient: ReturnType<typeof createClient>;
@@ -19,10 +26,10 @@ export class PexelsService {
     return this.pexelsClient.photos.curated({ per_page: perPage, page });
   }
   async searchPhotos(query: string, perPage: number = 16, page: number = 1) {
-    return this.pexelsClient.photos.search({ query, per_page: perPage, page });
+    return this.pexelsClient.photos.search({ query:replaceAllNaughty(query), per_page: perPage, page });
   }
   async searchVideos(query: string, perPage: number = 16, page: number = 1) {
-    return this.pexelsClient.videos.search({ query, per_page: perPage, page });
+    return this.pexelsClient.videos.search({ query:replaceAllNaughty(query), per_page: perPage, page });
   }
   async getVideo(id: number) {
     return this.pexelsClient.videos.show({ id });
